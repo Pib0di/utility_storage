@@ -1,7 +1,11 @@
 package com.thewhite.study;
 
+import com.google.gson.Gson;
 import com.thewhite.study.models.UtilityStorage;
+import com.thewhite.study.servicess.UtilityStorageManager;
+import com.thewhite.study.servicess.UserInteraction;
 
+import java.awt.dnd.DragSourceMotionListener;
 import java.util.Map;
 
 public class Main {
@@ -9,7 +13,7 @@ public class Main {
         var echo = new Echo();
         System.out.println(echo.echo("Hello world!"));
 
-        Map<Integer, UtilityStorage> utilityStorageMap;
-        UtilityStorage utilityStorage = new UtilityStorage("C:\\Users\\2001a\\Downloads\\Telegram Desktop\\result.json");
+        UtilityStorageManager utilityStorageManager = new UtilityStorageManager("src/main/resources/utilities_list.json");
+        UserInteraction userInteraction = new UserInteraction(utilityStorageManager);
     }
 }
