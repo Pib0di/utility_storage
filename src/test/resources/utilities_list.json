@@ -1,24 +1,20 @@
 [
   {
-    "id": 1,
     "name": "Backend in 1 hour",
     "description": "бэкенд за час, бесплатно и без регистрации ",
     "link": "https://backend.ru/error_data"
   },
   {
-    "id": 2,
     "name": "Oracle Backend for Spring Boot",
-    "description": "Oracle Backend для Spring Boot и микросервисов позволяет разработчикам создавать микросервисы в Spring Boot и предоставляет “серверную часть как сервис” с базой данных Oracle и другими компонентами инфраструктуры, которые работают в нескольких облаках. Серверная часть Oracle для Spring Boot и микросервисов значительно упрощает задачу создания, тестирования и эксплуатации платформ микросервисов для надежных, безопасных и масштабируемых корпоративных приложений.",
+    "description": "Oracle Backend ",
     "link": "https://oracle.github.io/microservices-datadriven/spring"
   },
   {
-    "id": 3,
     "name": "Oracle Backend for Spring Boot",
     "description": "",
     "link": "C:\\Users\\...\\Downloads\\Telegram Desktop\\result.json"
   },
   {
-    "id": 4,
     "name": "4",
     "description": "4",
     "link": "4"

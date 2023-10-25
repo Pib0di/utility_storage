@@ -9,10 +9,9 @@ import java.util.Scanner;
 public class UserInteraction {
     public UserInteraction(UtilityStorageManager utilityStorageManager) {
         this.utilityStorageManager = utilityStorageManager;
-        actionsLoop();
     }
 
-    void actionsLoop() {
+    public void actionsLoop() {
         while (true) {
             displayMainMenu();
             choose();
@@ -27,15 +26,16 @@ public class UserInteraction {
     }
 
     void choose() {
+
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.nextLine();
-        switch (Integer.parseInt(userInput)) {
+        switch (parseInt(userInput)) {
             case 1: {
-                System.out.println("Введите индекс искомой записи");
+                System.out.println("Введите идентификатор искомой записи");
                 userInput = scanner.nextLine();
-                UtilityStorage utilityStorage = utilityStorageManager.getUtility(Integer.parseInt(userInput));
-                if (utilityStorage != null){
-                    utilityStorageManager.outputAtId(Integer.parseInt(userInput));
+                UtilityStorage utilityStorage = utilityStorageManager.getUtility(parseInt(userInput));
+                if (utilityStorage != null) {
+                    System.out.println(utilityStorage);
                 } else {
                     System.out.println("Такой записи не существует!");
                     System.out.println();
@@ -45,14 +45,13 @@ public class UserInteraction {
             case 2: {
                 System.out.print("Введите часть искомой записи: ");
                 userInput = scanner.nextLine();
-                List<Integer> indexArray = utilityStorageManager.search(userInput);
-                if (indexArray.size() > 0){
+                List<UtilityStorage> indexArray = utilityStorageManager.search(userInput);
+                if (indexArray.size() > 0) {
                     System.out.println("Нашлось:");
                     indexArray.forEach(element -> {
-                        utilityStorageManager.outputAtId(element);
+                        System.out.println(element.toString());
                     });
                 } else {
-                    choose();
                     System.out.println("Ничего не нашлось! :(");
                 }
                 break;
@@ -62,8 +61,16 @@ public class UserInteraction {
                 break;
             }
             default: {
-                System.out.print("Введено некорректное значение: ");
+                System.out.print("Введено некорректное значение\n");
             }
+        }
+    }
+
+    Integer parseInt(String userInput) {
+        try {
+            return Integer.parseInt(userInput);
+        } catch (Exception e) {
+            return -1;
         }
     }
 

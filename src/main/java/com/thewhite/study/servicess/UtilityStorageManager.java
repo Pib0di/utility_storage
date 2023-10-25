@@ -9,23 +9,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UtilityStorageManager {
-    public UtilityStorageManager(){}
-    public UtilityStorageManager(String filePath){
+    public UtilityStorageManager(String filePath) {
+        readData(filePath);
+    }
+
+    public void readData(String filePath) {
         try (FileReader fileReader = new FileReader(filePath);
              JsonReader jsonReader = new JsonReader(fileReader)) {
 
             // чтение JSON и преобразование его в коллекцию
             Gson gson = new Gson();
-            Type collectionType = new TypeToken<Collection<UtilityStorage>>(){}.getType();
-            Collection<UtilityStorage> enums = gson.fromJson(jsonReader, collectionType);
+            Type collectionType = new TypeToken<Collection<UtilityStorage>>() {}.getType();
+            Collection<UtilityStorage> utilityStorageCollection = gson.fromJson(jsonReader, collectionType);
 
-            int id = 0;
-            for (UtilityStorage anEnum : enums) {
-                addUtility(id++, anEnum);
+            for (UtilityStorage utilityStorage : utilityStorageCollection) {
+                addUtility(utilityStorage);
             }
         } catch (IOException e) {
             System.err.println("Произошла ошибка ввода/вывода: " + e.getMessage());
@@ -34,39 +35,46 @@ public class UtilityStorageManager {
         }
     }
 
-    public void addUtility(Integer utilityId, UtilityStorage utilityStorage) {
-        utilityStorageMap.put(utilityId, utilityStorage);
+    int idGlobal = 0;
+    public void addUtility(UtilityStorage utilityStorage) {
+        if (utilityStorage != null) {
+            ++idGlobal;
+            utilityStorage.id = idGlobal;
+            utilityStorageMap.put(idGlobal, utilityStorage);
+        }
     }
 
     public UtilityStorage getUtility(Integer utilityId) {
-        return utilityStorageMap.get(utilityId);
-    }
-    void outputAtId(Integer utilityId){
-        UtilityStorage utility = getUtility(utilityId);
-        System.out.println("id: " + utility.id);
-        System.out.println("name: " + utility.name);
-        System.out.println("description: " + utility.description);
-        System.out.println("link: " + utility.link);
-        System.out.println();
+        for (UtilityStorage utilityStorage : utilityStorageMap.values()) {
+            if (utilityStorage.id == utilityId) {
+                return utilityStorage;
+            }
+        }
+        return null;
     }
 
-    List<Integer> search(String searchLine) {
-        List<Integer> indexArray = new ArrayList<>();
+    public Integer getUtilitySize() {
+        return utilityStorageMap.size();
+    }
+    public List<UtilityStorage> getUtilityStorageList (){
+        List<UtilityStorage> utilityStorageList = utilityStorageMap.values().stream().toList();
+        return utilityStorageList;
+    }
 
-        if (searchLine != null){
-            for (Map.Entry<Integer, UtilityStorage> entry : utilityStorageMap.entrySet()) {
-                Integer key = entry.getKey();
-                UtilityStorage value = entry.getValue();
-
+    public List<UtilityStorage> search(String searchLine) {
+        List<UtilityStorage> indexArray = new ArrayList<>();
+        if (searchLine != null && searchLine != "") {
+            for (UtilityStorage utilityStorage : utilityStorageMap.values()) {
                 Pattern pattern = Pattern.compile(Pattern.quote(searchLine), Pattern.CASE_INSENSITIVE);
-                boolean found = pattern.matcher(value.name).find();
+                Boolean found = pattern.matcher(utilityStorage.name).find();
                 if (found) {
-                    indexArray.add(key);
+                    indexArray.add(utilityStorage);
                 }
             }
         }
 
         return indexArray;
     }
+
     private Map<Integer, UtilityStorage> utilityStorageMap = new HashMap<>();
 }
