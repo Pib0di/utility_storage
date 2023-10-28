@@ -2,11 +2,12 @@ package com.thewhite.study.servicess;
 
 import com.thewhite.study.models.UtilityStorage;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserInteraction {
+    UtilityStorageManager utilityStorageManager;
+
     public UserInteraction(UtilityStorageManager utilityStorageManager) {
         this.utilityStorageManager = utilityStorageManager;
     }
@@ -74,5 +75,4 @@ public class UserInteraction {
         }
     }
 
-    UtilityStorageManager utilityStorageManager;
 }

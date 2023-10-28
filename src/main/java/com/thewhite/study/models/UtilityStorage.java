@@ -5,13 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
 public class UtilityStorage {
-    public UtilityStorage(Integer id, String name, String description, String link) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.link = link;
-    }
-
     public int id;
 
     @SerializedName("name")
@@ -22,6 +15,13 @@ public class UtilityStorage {
 
     @SerializedName("link")
     public String link;
+
+    public UtilityStorage(Integer id, String name, String description, String link) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.link = link;
+    }
 
     @Override
     public boolean equals(Object o) {

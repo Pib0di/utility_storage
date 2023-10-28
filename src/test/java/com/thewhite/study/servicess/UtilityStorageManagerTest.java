@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.ReflectionUtils;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class UtilityStorageManagerTest {
-    private UtilityStorageManager utilityStorageManager = new UtilityStorageManager("src/test/resources/utilities_list.json");
+    private UtilityStorageManager utilityStorageManager = new UtilityStorageManager();
     UtilityStorage utilityStorage_1;
     List<UtilityStorage> utilityStorageList = new ArrayList<>();
 
@@ -25,7 +26,7 @@ class UtilityStorageManagerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        utilityStorageManager.readData("src/test/resources/utilities_list.json");
 
         utilityStorage_1 = new UtilityStorage(1, "Backend in 1 hour", "бэкенд за час, бесплатно и без регистрации ", "https://backend.ru/error_data");
 
@@ -33,7 +34,6 @@ class UtilityStorageManagerTest {
         utilityStorageList.add(new UtilityStorage(2, "Oracle Backend for Spring Boot", "Oracle Backend ", "https://oracle.github.io/microservices-datadriven/spring"));
         utilityStorageList.add(new UtilityStorage(3, "Oracle Backend for Spring Boot", "", "C:\\Users\\...\\Downloads\\Telegram Desktop\\result.json"));
         utilityStorageList.add(new UtilityStorage(4, "4", "4", "4"));
-
     }
 
     @Nested
@@ -51,15 +51,13 @@ class UtilityStorageManagerTest {
         @Test
         void adding_utility_to_existing_set_utilities() {
             // Setup
-            UtilityStorage utilityStorage = new UtilityStorage(4567745, "Backend in 1 hour", "данные под должны записаться под уникальным id", "https://backend.ru/error_data");
-
-//            when(mockUtilityStorageManager.getUtility(-1)).thenReturn(utilityStorage);
+            UtilityStorage utilityStorage = new UtilityStorage(4567745, "Backend in 1 hour", "данные должны записаться под уникальным id", "https://backend.ru/error_data");
 
             // Act
-//            mockUtilityStorageManager.addUtility(utilityStorage);
             utilityStorageManager.addUtility(utilityStorage);
 
             // Assert
+            ReflectionUtils.tryToReadFieldValue(UtilityStorageManager.class, "utilityStorageMap", utilityStorageManager);
             assertEquals(utilityStorageManager.getUtilityStorageList().get(4), utilityStorageManager.getUtility(5));
         }
     }

@@ -12,9 +12,10 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class UtilityStorageManager {
-    public UtilityStorageManager(String filePath) {
-        readData(filePath);
-    }
+    private final Map<Integer, UtilityStorage> utilityStorageMap = new HashMap<>();
+    int idGlobal = 0;
+
+    public UtilityStorageManager() {}
 
     public void readData(String filePath) {
         try (FileReader fileReader = new FileReader(filePath);
@@ -35,7 +36,6 @@ public class UtilityStorageManager {
         }
     }
 
-    int idGlobal = 0;
     public void addUtility(UtilityStorage utilityStorage) {
         if (utilityStorage != null) {
             ++idGlobal;
@@ -45,28 +45,19 @@ public class UtilityStorageManager {
     }
 
     public UtilityStorage getUtility(Integer utilityId) {
-        for (UtilityStorage utilityStorage : utilityStorageMap.values()) {
-            if (utilityStorage.id == utilityId) {
-                return utilityStorage;
-            }
-        }
-        return null;
+        return utilityStorageMap.get(utilityId);
     }
 
-    public Integer getUtilitySize() {
-        return utilityStorageMap.size();
-    }
     public List<UtilityStorage> getUtilityStorageList (){
-        List<UtilityStorage> utilityStorageList = utilityStorageMap.values().stream().toList();
-        return utilityStorageList;
+        return List.copyOf(utilityStorageMap.values());
     }
 
     public List<UtilityStorage> search(String searchLine) {
         List<UtilityStorage> indexArray = new ArrayList<>();
-        if (searchLine != null && searchLine != "") {
+        if (searchLine != null && !searchLine.equals("")) {
             for (UtilityStorage utilityStorage : utilityStorageMap.values()) {
                 Pattern pattern = Pattern.compile(Pattern.quote(searchLine), Pattern.CASE_INSENSITIVE);
-                Boolean found = pattern.matcher(utilityStorage.name).find();
+                boolean found = pattern.matcher(utilityStorage.name).find();
                 if (found) {
                     indexArray.add(utilityStorage);
                 }
@@ -76,5 +67,4 @@ public class UtilityStorageManager {
         return indexArray;
     }
 
-    private Map<Integer, UtilityStorage> utilityStorageMap = new HashMap<>();
 }
