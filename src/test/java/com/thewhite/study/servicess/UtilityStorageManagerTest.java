@@ -1,39 +1,34 @@
 package com.thewhite.study.servicess;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thewhite.study.models.UtilityStorage;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ReflectionUtils;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class UtilityStorageManagerTest {
-    private UtilityStorageManager utilityStorageManager = new UtilityStorageManager();
-    UtilityStorage utilityStorage_1;
+    private final UtilityStorageManager utilityStorageManager = new UtilityStorageManager();
     List<UtilityStorage> utilityStorageList = new ArrayList<>();
 
-    @Mock
-    private UtilityStorageManager mockUtilityStorageManager;
-
+    @SneakyThrows
     @BeforeEach
     void setUp() {
         utilityStorageManager.readData("src/test/resources/utilities_list.json");
 
-        utilityStorage_1 = new UtilityStorage(1, "Backend in 1 hour", "бэкенд за час, бесплатно и без регистрации ", "https://backend.ru/error_data");
-
-        utilityStorageList.add(new UtilityStorage(1, "Backend in 1 hour", "бэкенд за час, бесплатно и без регистрации ", "https://backend.ru/error_data"));
-        utilityStorageList.add(new UtilityStorage(2, "Oracle Backend for Spring Boot", "Oracle Backend ", "https://oracle.github.io/microservices-datadriven/spring"));
-        utilityStorageList.add(new UtilityStorage(3, "Oracle Backend for Spring Boot", "", "C:\\Users\\...\\Downloads\\Telegram Desktop\\result.json"));
-        utilityStorageList.add(new UtilityStorage(4, "4", "4", "4"));
+        FileReader fileReader = new FileReader("src/test/resources/utilities_list.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        utilityStorageList = objectMapper.readValue(fileReader, new TypeReference<>() {});
     }
 
     @Nested
@@ -45,13 +40,16 @@ class UtilityStorageManagerTest {
             List<UtilityStorage> actualList = utilityStorageManager.getUtilityStorageList();
 
             // Assert
-            Assertions.assertTrue(utilityStorageList.equals(actualList));
+            assertEquals(utilityStorageList, actualList);
         }
 
         @Test
         void adding_utility_to_existing_set_utilities() {
             // Setup
-            UtilityStorage utilityStorage = new UtilityStorage(4567745, "Backend in 1 hour", "данные должны записаться под уникальным id", "https://backend.ru/error_data");
+            UtilityStorage utilityStorage = UtilityStorage.builder()
+                    .name("Backend in 1 hour")
+                    .description("данные должны записаться под уникальным id")
+                    .link("https://backend.ru/error_data").build();
 
             // Act
             utilityStorageManager.addUtility(utilityStorage);
@@ -79,14 +77,14 @@ class UtilityStorageManagerTest {
             UtilityStorage utilityStorage = utilityStorageManager.getUtility(1);
 
             // Assert
-            assertEquals(utilityStorage, utilityStorage_1);
+            assertEquals(utilityStorage, utilityStorageList.get(0));
         }
     }
 
     @Nested
     class Search {
         @Test
-        void finding_all_rows() {
+        void finding_empty_rows() {
             // Setup
             List<UtilityStorage> expectedList = new ArrayList<>();
 
@@ -101,21 +99,21 @@ class UtilityStorageManagerTest {
         void finding_multiple_rows() {
             // Setup
             List<UtilityStorage> expectedList = new ArrayList<>();
-            expectedList.add(new UtilityStorage(2, "Oracle Backend for Spring Boot", "Oracle Backend ", "https://oracle.github.io/microservices-datadriven/spring"));
-            expectedList.add(new UtilityStorage(3, "Oracle Backend for Spring Boot", "", "C:\\Users\\...\\Downloads\\Telegram Desktop\\result.json"));
+            expectedList.add(utilityStorageList.get(1));
+            expectedList.add(utilityStorageList.get(2));
 
             // Act
             List<UtilityStorage> actualList = utilityStorageManager.search("Oracle");
 
             // Assert
-            Assertions.assertTrue(expectedList.equals(actualList));
+            Assertions.assertEquals(expectedList, actualList);
         }
 
         @Test
         void finding_rows_with_space() {
             // Setup
             List<UtilityStorage> expectedList = new ArrayList<>();
-            expectedList.add(new UtilityStorage(1, "Backend in 1 hour", "бэкенд за час, бесплатно и без регистрации ", "https://backend.ru/error_data"));
+            expectedList.add(utilityStorageList.get(0));
 
             // Act
             List<UtilityStorage> listInteger = utilityStorageManager.search(" in 1 hour");

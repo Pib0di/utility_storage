@@ -1,14 +1,11 @@
 package com.thewhite.study;
 
-import com.thewhite.study.servicess.UtilityStorageManager;
-import com.thewhite.study.servicess.UserInteraction;
-import org.jetbrains.annotations.NotNull;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main {
-    public static void main(String @NotNull [] args) {
-        UtilityStorageManager utilityStorageManager = new UtilityStorageManager();
-        utilityStorageManager.readData(args[0]);
-        UserInteraction userInteraction = new UserInteraction(utilityStorageManager);
-        userInteraction.actionsLoop();
+    public static void main(String [] args) {
+        SpringApplication.run(Main.class, args);
     }
 }
