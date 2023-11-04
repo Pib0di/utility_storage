@@ -1,10 +1,6 @@
 package com.thewhite.study.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
+import lombok.*;
 
 @Data
 @Builder
@@ -12,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 public class UtilityStorage{
     int id;
-    @NotNull String name;
-    @NotNull String description;
-    @NotNull String link;
+    @NonNull String name;
+    @NonNull String description;
+    @NonNull String link;
 }

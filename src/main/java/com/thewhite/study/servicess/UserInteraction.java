@@ -1,7 +1,7 @@
 package com.thewhite.study.servicess;
 
 import com.thewhite.study.models.UtilityStorage;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -9,15 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 @Component
+@RequiredArgsConstructor
 public class UserInteraction implements CommandLineRunner {
-    UtilityStorageManager utilityStorageManager;
-
-    @Autowired
-    public UserInteraction(UtilityStorageManager utilityStorageManager) {
-        this.utilityStorageManager = utilityStorageManager;
-    }
-    public UserInteraction( ) {
-    }
+    private final UtilityStorageManager utilityStorageManager;
 
     @Override
     public void run(String... args) throws Exception {
