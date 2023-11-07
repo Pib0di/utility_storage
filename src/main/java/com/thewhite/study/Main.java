@@ -1,15 +1,11 @@
 package com.thewhite.study;
 
-import com.thewhite.study.models.UtilityStorage;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Map;
-
+@SpringBootApplication
 public class Main {
-    public static void main(String[] args) {
-        var echo = new Echo();
-        System.out.println(echo.echo("Hello world!"));
-
-        Map<Integer, UtilityStorage> utilityStorageMap;
-        UtilityStorage utilityStorage = new UtilityStorage("C:\\Users\\2001a\\Downloads\\Telegram Desktop\\result.json");
+    public static void main(String [] args) {
+        SpringApplication.run(Main.class, args);
     }
 }
