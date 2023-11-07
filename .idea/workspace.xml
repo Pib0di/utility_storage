@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d7c9b93a-1d09-4608-9483-0d6562ab1b6d" name="Changes" comment="correction of comments (pom.xml)" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="hw_1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2Wt75Ap2xxgFzHbHveXwoBjr3fs" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;15&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;15&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/2001a/Downloads/Telegram Desktop/utility_storage/src/test/resources&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.32873562&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;a508353bd9708b08b427c9a4f69af6b8&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\2001a\Downloads\Telegram Desktop\utility_storage\src\test\resources" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\2001a\Downloads\Telegram Desktop\utility_storage\src\test" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.thewhite.study.servicess" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="jbr-17" />
+      <option name="MAIN_CLASS_NAME" value="com.thewhite.study.Main" />
+      <module name="utility_storage" />
+      <option name="PROGRAM_PARAMETERS" value="src/main/resources/utilities_list.json" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.thewhite.study.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UtilityStorageManagerTest$AddUtility.adding_utility_to_existing_set_utilities" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="utility_storage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.thewhite.study.servicess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.thewhite.study.servicess.UtilityStorageManagerTest" />
+      <option name="MAIN_CLASS_NAME" value="com.thewhite.study.servicess.UtilityStorageManagerTest$AddUtility" />
+      <option name="METHOD_NAME" value="adding_utility_to_existing_set_utilities" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UtilityStorageManagerTest$GetUtility.getUtility" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="utility_storage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.thewhite.study.servicess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.thewhite.study.servicess.UtilityStorageManagerTest" />
+      <option name="MAIN_CLASS_NAME" value="com.thewhite.study.servicess.UtilityStorageManagerTest$GetUtility" />
+      <option name="METHOD_NAME" value="getUtility" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UtilityStorageManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="utility_storage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.thewhite.study.servicess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.thewhite.study.servicess" />
+      <option name="MAIN_CLASS_NAME" value="com.thewhite.study.servicess.UtilityStorageManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UtilityStorageManagerTest.getUtility" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="utility_storage" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.thewhite.study.servicess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.thewhite.study.servicess" />
+      <option name="MAIN_CLASS_NAME" value="com.thewhite.study.servicess.UtilityStorageManagerTest" />
+      <option name="METHOD_NAME" value="getUtility" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="utility_storage" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.thewhite.study.Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.UtilityStorageManagerTest$AddUtility.adding_utility_to_existing_set_utilities" />
+      <item itemvalue="JUnit.UtilityStorageManagerTest$GetUtility.getUtility" />
+      <item itemvalue="JUnit.UtilityStorageManagerTest" />
+      <item itemvalue="JUnit.UtilityStorageManagerTest.getUtility" />
+      <item itemvalue="Spring Boot.Main" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.UtilityStorageManagerTest" />
+        <item itemvalue="JUnit.UtilityStorageManagerTest.getUtility" />
+        <item itemvalue="JUnit.UtilityStorageManagerTest$GetUtility.getUtility" />
+        <item itemvalue="JUnit.UtilityStorageManagerTest$AddUtility.adding_utility_to_existing_set_utilities" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d7c9b93a-1d09-4608-9483-0d6562ab1b6d" name="Changes" comment="" />
+      <created>1697539837981</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697539837981</updated>
+      <workItem from="1697539839404" duration="1362000" />
+      <workItem from="1697602503508" duration="1712000" />
+      <workItem from="1697620530105" duration="7534000" />
+      <workItem from="1697787167924" duration="30969000" />
+      <workItem from="1697977518251" duration="643000" />
+      <workItem from="1698030843626" duration="9740000" />
+      <workItem from="1698132529486" duration="31574000" />
+      <workItem from="1698300126257" duration="6176000" />
+      <workItem from="1698567023677" duration="2198000" />
+      <workItem from="1698584853424" duration="530000" />
+      <workItem from="1698585629360" duration="849000" />
+      <workItem from="1698673476463" duration="5544000" />
+      <workItem from="1698729778594" duration="7496000" />
+      <workItem from="1698741308875" duration="4056000" />
+      <workItem from="1698765958717" duration="452000" />
+      <workItem from="1698795144642" duration="1665000" />
+      <workItem from="1698797458257" duration="4772000" />
+      <workItem from="1698802261590" duration="18263000" />
+      <workItem from="1698930758636" duration="12459000" />
+      <workItem from="1698944747009" duration="159000" />
+      <workItem from="1698944914036" duration="1411000" />
+      <workItem from="1699006557052" duration="10248000" />
+      <workItem from="1699166934634" duration="662000" />
+      <workItem from="1699327368703" duration="1971000" />
+    </task>
+    <task id="LOCAL-00001" summary="creating a repository">
+      <created>1697787682197</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697787682197</updated>
+    </task>
+    <task id="LOCAL-00002" summary="homework 1">
+      <created>1697937757649</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1697937757649</updated>
+    </task>
+    <task id="LOCAL-00003" summary=".gitignore">
+      <created>1698031196491</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698031196491</updated>
+    </task>
+    <task id="LOCAL-00004" summary=".gitignore">
+      <created>1698031280689</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698031280689</updated>
+    </task>
+    <task id="LOCAL-00005" summary=".gitignore">
+      <created>1698032046350</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1698032046350</updated>
+    </task>
+    <task id="LOCAL-00006" summary="correction of comments">
+      <created>1698208993821</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698208993821</updated>
+    </task>
+    <task id="LOCAL-00007" summary="correction of comments part 2">
+      <created>1698501974285</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1698501974285</updated>
+    </task>
+    <task id="LOCAL-00008" summary="convert to spring boot">
+      <created>1698944420142</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1698944420142</updated>
+    </task>
+    <task id="LOCAL-00009" summary=".gitignore">
+      <created>1698944831234</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1698944831234</updated>
+    </task>
+    <task id="LOCAL-00010" summary="correction of comments">
+      <created>1699116846727</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699116846727</updated>
+    </task>
+    <task id="LOCAL-00011" summary="correction of comments (pom.xml)">
+      <created>1699327525579</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1699327525579</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="hw_2_(springBootovoe)" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="creating a repository" />
+    <MESSAGE value="homework 1" />
+    <MESSAGE value="correction of comments part 2" />
+    <MESSAGE value="convert to spring boot" />
+    <MESSAGE value=".gitignore" />
+    <MESSAGE value="correction of comments" />
+    <MESSAGE value="correction of comments (pom.xml)" />
+    <option name="LAST_COMMIT_MESSAGE" value="correction of comments (pom.xml)" />
+  </component>
+</project>
