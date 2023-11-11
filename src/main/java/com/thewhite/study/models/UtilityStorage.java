@@ -1,15 +1,13 @@
-package com.thewhite.utility_storage.models;
+package com.thewhite.study.models;
 
 import lombok.*;
-
-import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UtilityStorage {
-    UUID uuid;
+public class UtilityStorage{
+    int id;
     @NonNull String name;
     @NonNull String description;
     @NonNull String link;
