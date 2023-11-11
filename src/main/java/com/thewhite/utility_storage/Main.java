@@ -1,4 +1,4 @@
-package com.thewhite.study;
+package com.thewhite.utility_storage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
