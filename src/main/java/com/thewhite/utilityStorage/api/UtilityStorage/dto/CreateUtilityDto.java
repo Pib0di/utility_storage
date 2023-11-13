@@ -1,0 +1,13 @@
+package com.thewhite.utilityStorage.api.UtilityStorage.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
+
+@Value
+@Builder
+@Schema(description = "ДТО для создания записи")
+public class CreateUtilityDto {
+    String name;
+    String description;
+    String link;
+}
