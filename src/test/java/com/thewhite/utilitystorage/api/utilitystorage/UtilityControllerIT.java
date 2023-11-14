@@ -51,8 +51,6 @@ public class UtilityControllerIT {
 
     @Test
     void search(SoftAssertions assertions) {
-        //Arrange
-
         // Act
         List<UtilityStorageDto> response = webTestClient.get()
                 .uri("utility/search/bloc")
@@ -154,8 +152,6 @@ public class UtilityControllerIT {
 
     @Test
     void deleteUtility() {
-        //Arrange
-
         //Act
         webTestClient
                 .delete()
@@ -169,8 +165,6 @@ public class UtilityControllerIT {
 
     @Test
     void getUtility(SoftAssertions assertions) {
-        //Arrange
-
         //Act
         UtilityStorageDto response = webTestClient.get()
                 .uri("utility/get/" + id)
