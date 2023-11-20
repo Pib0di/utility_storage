@@ -17,18 +17,18 @@ public class ApiExceptionHandler {
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public @ResponseBody ErrorDto processNotFoundException(NotFoundException exception) {
-        return ErrorDto.of(exception.getMessage(), NOT_FOUND);
+        return ErrorDto.of(exception.getMessage());
     }
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(BadInputDataForRating.class)
     public @ResponseBody ErrorDto processNotFoundException(BadInputDataForRating exception) {
-        return ErrorDto.of(exception.getMessage(), BAD_REQUEST);
+        return ErrorDto.of(exception.getMessage());
     }
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public @ResponseBody ErrorDto processNotFoundException(HttpMessageNotReadableException exception) {
-        return ErrorDto.of(exception.getMessage(), BAD_REQUEST);
+        return ErrorDto.of(exception.getMessage());
     }
 }

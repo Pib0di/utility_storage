@@ -1,6 +1,6 @@
 package com.thewhite.utilitystorage.repository;
 
-import com.thewhite.utilitystorage.models.Rating;
+import com.thewhite.utilitystorage.model.rating.Rating;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

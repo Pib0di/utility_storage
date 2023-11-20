@@ -1,4 +1,4 @@
-package com.thewhite.utilitystorage.models;
+package com.thewhite.utilitystorage.model.utilityStorage;
 
 import lombok.*;
 

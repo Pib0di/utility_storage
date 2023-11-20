@@ -6,7 +6,4 @@ public class BadInputDataForRating extends IllegalArgumentException {
         super(error);
     }
 
-    public String getError() {
-        return super.getMessage();
-    }
 }

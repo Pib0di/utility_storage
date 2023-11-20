@@ -1,4 +1,4 @@
-package com.thewhite.utilitystorage.action.argument.UtilityStorage;
+package com.thewhite.utilitystorage.service.utilitystorage.argument;
 
 import lombok.Builder;
 import lombok.Value;
@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Value
 @Builder
-public class UpdateUtilityArg {
+public class UpdateUtilityArgument {
     UUID id;
     String name;
     String description;

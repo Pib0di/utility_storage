@@ -1,6 +1,6 @@
 package com.thewhite.utilitystorage.api.rating.dto;
 
-import com.thewhite.utilitystorage.common.variable.NumberPoints;
+import com.thewhite.utilitystorage.model.rating.NumberPoints;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Value;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @Schema(description = "ДТО добавления рейтинга к записи")
 public class AddRatingDto {
-    UUID utilityId;
+    UUID utilityStorageId;
     NumberPoints point;
 }
 

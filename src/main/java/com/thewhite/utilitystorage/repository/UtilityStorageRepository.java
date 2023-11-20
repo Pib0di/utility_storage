@@ -1,7 +1,7 @@
 package com.thewhite.utilitystorage.repository;
 
 import com.thewhite.utilitystorage.exception.NotFoundException;
-import com.thewhite.utilitystorage.models.UtilityStorage;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 

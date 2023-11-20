@@ -4,7 +4,7 @@ package com.thewhite.utilitystorage.api.utilitystorage;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.CreateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UpdateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
-import com.thewhite.utilitystorage.models.UtilityStorage;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
@@ -95,6 +95,7 @@ public class UtilityControllerIT {
                 .getResponseBody();
 
         //Assert
+        assert response != null;
         UtilityStorageDto expected = UtilityStorageDto.builder()
                 .id(response.getId())
                 .name("bloc")
@@ -176,6 +177,7 @@ public class UtilityControllerIT {
                 .getResponseBody();
 
         //Assert
+        assert response != null;
         UtilityStorageDto expectedDto = UtilityStorageDto.builder()
                 .id(response.getId())
                 .name("bloc")

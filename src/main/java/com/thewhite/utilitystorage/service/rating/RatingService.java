@@ -1,10 +1,9 @@
-package com.thewhite.utilitystorage.servicess.rating;
+package com.thewhite.utilitystorage.service.rating;
 
-import com.thewhite.utilitystorage.action.argument.rating.AddRatingArg;
 import com.thewhite.utilitystorage.exception.BadInputDataForRating;
-import com.thewhite.utilitystorage.models.Rating;
+import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.repository.RatingRepository;
-import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
+import com.thewhite.utilitystorage.service.rating.argument.AddRatingArgument;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,17 +17,14 @@ import java.util.UUID;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class RatingService {
     RatingRepository ratingRepository;
-    UtilityStorageRepository repository;
 
-    public Rating add(AddRatingArg addRatingArg) {
-        if(repository.get(addRatingArg.getUtilityId()) == null){
-            throw new BadInputDataForRating("Запись по заданному id не найдена");
-        }
+    public Rating add(AddRatingArgument addRatingArgument) {
+
         return ratingRepository.add(
                 Rating.builder()
                         .id(UUID.randomUUID())
-                        .utilityId(addRatingArg.getUtilityId())
-                        .point(addRatingArg.getPoint())
+                        .utilityId(addRatingArgument.getUtilityStorageId())
+                        .point(addRatingArgument.getPoint())
                         .build()
         );
     }

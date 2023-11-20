@@ -1,9 +1,9 @@
-package com.thewhite.utilitystorage.servicess.utilitystorage;
+package com.thewhite.utilitystorage.service.utilitystorage;
 
-import com.thewhite.utilitystorage.action.argument.UtilityStorage.CreateUtilityArg;
-import com.thewhite.utilitystorage.action.argument.UtilityStorage.UpdateUtilityArg;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import com.thewhite.utilitystorage.exception.NotFoundException;
-import com.thewhite.utilitystorage.models.UtilityStorage;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -21,7 +21,7 @@ public class UtilityStorageServiceImpl implements UtilityStorageService {
     UtilityStorageRepository utilityStorageRepository;
 
     @Override
-    public UtilityStorage create(CreateUtilityArg createUtility) throws NotFoundException {
+    public UtilityStorage create(CreateUtilityArgument createUtility) throws NotFoundException {
         UUID id = UUID.randomUUID();
         return utilityStorageRepository.create(UtilityStorage.builder()
                 .id(id)
@@ -42,12 +42,12 @@ public class UtilityStorageServiceImpl implements UtilityStorageService {
     }
 
     @Override
-    public UtilityStorage update(@NonNull UpdateUtilityArg updateUtilityArg) {
+    public UtilityStorage update(@NonNull UpdateUtilityArgument updateUtilityArgument) {
         return utilityStorageRepository.update(UtilityStorage.builder()
-                .id(updateUtilityArg.getId())
-                .name(updateUtilityArg.getName())
-                .description(updateUtilityArg.getDescription())
-                .link(updateUtilityArg.getLink())
+                .id(updateUtilityArgument.getId())
+                .name(updateUtilityArgument.getName())
+                .description(updateUtilityArgument.getDescription())
+                .link(updateUtilityArgument.getLink())
                 .build());
     }
 
@@ -60,4 +60,5 @@ public class UtilityStorageServiceImpl implements UtilityStorageService {
     public List<UtilityStorage> getUtilityStorageList() {
         return utilityStorageRepository.getList();
     }
+
 }

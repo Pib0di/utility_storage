@@ -1,0 +1,22 @@
+[
+  {
+    "id": "724aebb0-251f-447b-a293-bee75c676ecc",
+    "utilityId": "a9147542-4860-4c67-9d2a-f506c2b7c921",
+    "point": "ONE"
+  },
+  {
+    "id": "d12246c5-b051-4d24-95bb-382898ff77eb",
+    "utilityId": "a9147542-4860-4c67-9d2a-f506c2b7c921",
+    "point": 1
+  },
+  {
+    "id": "6521ec13-e296-4f55-93d7-03d9ce34992d",
+    "utilityId": "74b7c941-80bb-4690-aaba-19236334720c",
+    "point": 4
+  },
+  {
+    "id": "24ce7ae4-12e8-4d80-9277-66328da71a11",
+    "utilityId": "74b7c941-80bb-4690-aaba-19236334720c",
+    "point": "THREE"
+  }
+]
