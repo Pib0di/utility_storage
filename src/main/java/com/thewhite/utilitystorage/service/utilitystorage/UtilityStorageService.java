@@ -21,6 +21,4 @@ public interface UtilityStorageService {
 
     UtilityStorage delete(UUID id);
 
-
-    List<UtilityStorage> getUtilityStorageList();
 }

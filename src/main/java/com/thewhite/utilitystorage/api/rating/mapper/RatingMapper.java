@@ -1,6 +1,6 @@
 package com.thewhite.utilitystorage.api.rating.mapper;
 
-import com.thewhite.utilitystorage.action.addRating.CreateRatingArgument;
+import com.thewhite.utilitystorage.action.rating.add.CreateRatingArgument;
 import com.thewhite.utilitystorage.api.rating.dto.AddRatingDto;
 import com.thewhite.utilitystorage.api.rating.dto.RatingDto;
 import com.thewhite.utilitystorage.model.rating.Rating;

@@ -20,18 +20,16 @@ public class RatingService {
 
     public Rating add(AddRatingArgument addRatingArgument) {
 
-        return ratingRepository.add(
-                Rating.builder()
-                        .id(UUID.randomUUID())
-                        .utilityId(addRatingArgument.getUtilityStorageId())
-                        .point(addRatingArgument.getPoint())
-                        .build()
-        );
+        return ratingRepository.add(Rating.builder()
+                .id(UUID.randomUUID())
+                .utilityId(addRatingArgument.getUtilityStorageId())
+                .point(addRatingArgument.getPoint())
+                .build());
     }
 
     public Rating delete(UUID id) {
         Rating result = ratingRepository.delete(id);
-        if (result == null){
+        if (result == null) {
             throw new BadInputDataForRating("Запись по указанному id не найдена");
         }
         return result;

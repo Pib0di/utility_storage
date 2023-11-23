@@ -1,4 +1,4 @@
-package com.thewhite.utilitystorage.action.addRating;
+package com.thewhite.utilitystorage.action.rating.add;
 
 import com.thewhite.utilitystorage.exception.BadInputDataForRating;
 import com.thewhite.utilitystorage.model.rating.Rating;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class AddRatingController {
+public class AddRatingAction {
     private final RatingService ratingService;
     private final UtilityStorageService utilityStorageService;
 

@@ -56,9 +56,4 @@ public class UtilityStorageServiceImpl implements UtilityStorageService {
         return utilityStorageRepository.delete(id);
     }
 
-    @Override
-    public List<UtilityStorage> getUtilityStorageList() {
-        return utilityStorageRepository.getList();
-    }
-
 }

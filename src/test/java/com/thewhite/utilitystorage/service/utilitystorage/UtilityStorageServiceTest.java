@@ -20,8 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class UtilityStorageServiceTest {
-    UtilityStorageRepository utilityStorageRepository = new UtilityStorageRepository();
+    private final UtilityStorageRepository utilityStorageRepository = new UtilityStorageRepository();
     private final UtilityStorageServiceImpl utilityStorageService = new UtilityStorageServiceImpl(utilityStorageRepository);
+
     List<UtilityStorage> expectedUtilityStorageList = new ArrayList<>();
 
     @SneakyThrows
@@ -44,21 +45,10 @@ class UtilityStorageServiceTest {
 
     @Nested
     class create {
-        @Test
-        void adding_multiple_Utility() {
-            // Setup
-            //инициализируется в setUp()
-
-            // Act
-            List<UtilityStorage> actualList = utilityStorageService.getUtilityStorageList();
-
-            // Assert
-            Assertions.assertTrue(actualList.containsAll(expectedUtilityStorageList));
-        }
 
         @Test
         void adding_utility_to_existing_set_utilities() {
-            // Setup
+            // Arrange
             UtilityStorage utilityStorage = UtilityStorage.builder()
                     .name("Backend in 1 hour")
                     .description("данные должны записаться под уникальным id")
@@ -95,7 +85,6 @@ class UtilityStorageServiceTest {
         @Test
         void getUtility() {
             // Act
-            System.out.println(expectedUtilityStorageList.get(0).getId());
             UtilityStorage utilityStorage = utilityStorageService.get(expectedUtilityStorageList.get(0).getId());
 
             // Assert
@@ -108,7 +97,7 @@ class UtilityStorageServiceTest {
     class search {
         @Test
         void finding_empty_rows() {
-            // Setup
+            // Arrange
             List<UtilityStorage> expectedList = new ArrayList<>();
 
             // Act
@@ -120,7 +109,7 @@ class UtilityStorageServiceTest {
 
         @Test
         void finding_multiple_rows() {
-            // Setup
+            // Arrange
             List<UtilityStorage> expectedList = new ArrayList<>();
             expectedList.add(expectedUtilityStorageList.get(2));
             expectedList.add(expectedUtilityStorageList.get(1));
@@ -135,7 +124,7 @@ class UtilityStorageServiceTest {
 
         @Test
         void finding_rows_with_space() {
-            // Setup
+            // Arrange
             List<UtilityStorage> expectedList = new ArrayList<>();
             expectedList.add(expectedUtilityStorageList.get(0));
 

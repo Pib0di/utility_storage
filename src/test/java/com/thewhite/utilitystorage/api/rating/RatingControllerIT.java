@@ -1,6 +1,6 @@
 package com.thewhite.utilitystorage.api.rating;
 
-import com.thewhite.utilitystorage.action.addRating.CreateRatingArgument;
+import com.thewhite.utilitystorage.api.rating.dto.AddRatingDto;
 import com.thewhite.utilitystorage.api.rating.dto.RatingDto;
 import com.thewhite.utilitystorage.model.rating.NumberPoints;
 import com.thewhite.utilitystorage.model.rating.Rating;
@@ -28,7 +28,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureWebClient
 @ExtendWith(SoftAssertionsExtension.class)
-class RatingControllerTest {
+class RatingControllerIT {
 
     @Autowired
     WebTestClient webTestClient;
@@ -72,14 +72,14 @@ class RatingControllerTest {
     @Test
     void add(SoftAssertions assertions) {
         //Arrange
-        CreateRatingArgument dto = CreateRatingArgument.builder()
+        AddRatingDto dto = AddRatingDto.builder()
                 .utilityStorageId(utilityId)
                 .point(NumberPoints.THREE)
                 .build();
 
         //Act
         RatingDto response = webTestClient.post()
-                .uri("rating/add")
+                .uri("ratings/add")
                 .contentType(APPLICATION_JSON)
                 .bodyValue(dto)
                 .exchange()
@@ -90,7 +90,6 @@ class RatingControllerTest {
                 .getResponseBody();
 
         //Assert
-        assert response != null;
         RatingDto expected = RatingDto.builder()
                 .id(response.getId())
                 .utilityId(utilityId)
@@ -105,15 +104,11 @@ class RatingControllerTest {
         //Act
         webTestClient
                 .delete()
-                .uri("rating/delete/" + id)
+                .uri("ratings/delete/" + id)
                 .exchange()
                 //Assert
                 .expectStatus()
                 .isOk();
     }
 
-    @Test
-    void getList() {
-
-    }
 }

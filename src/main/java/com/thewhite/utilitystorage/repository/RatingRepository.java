@@ -26,6 +26,8 @@ public class RatingRepository {
     }
 
     public List<Rating> getList(UUID utilityId) {
-        return ratingMap.values().stream().filter(arg -> arg.getUtilityId().equals(utilityId)).toList();
+        return ratingMap.values().stream()
+                .filter(arg -> arg.getUtilityId().equals(utilityId))
+                .toList();
     }
 }
