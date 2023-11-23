@@ -3,6 +3,7 @@ package com.thewhite.utilitystorage.service.utilitystorage.argument;
 import lombok.Builder;
 import lombok.Value;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Value
@@ -11,5 +12,5 @@ public class UpdateUtilityArgument {
     UUID id;
     String name;
     String description;
-    String link;
+    Set<String> link;
 }
