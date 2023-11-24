@@ -1,6 +1,5 @@
 package com.thewhite.utilitystorage.model.rating;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -19,12 +18,10 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.UUID)
-    @NotNull(message = "не указано id записи")
     UUID id;
 
     @Column()
     @JdbcTypeCode(SqlTypes.UUID)
-    @NotBlank(message = "не указан комментарий")
     UUID utilityId;
 
     @Column()
