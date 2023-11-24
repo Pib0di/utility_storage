@@ -1,3 +1,4 @@
+
 package com.thewhite.utilitystorage.repository;
 
 import com.thewhite.utilitystorage.model.rating.Rating;

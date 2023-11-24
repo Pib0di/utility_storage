@@ -20,7 +20,6 @@ public class UtilityStorage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.UUID)
-    @NotNull(message = "не указано id записи")
     UUID id;
 
     @Column(nullable = false)

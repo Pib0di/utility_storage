@@ -5,13 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,9 +25,8 @@ class UtilityStorageServiceTest {
 
     List<UtilityStorage> expectedUtilityStorageList = new ArrayList<>();
 
-    @SneakyThrows
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
 
         FileReader fileReader = new FileReader("src/test/resources/utilities_list.json");
         expectedUtilityStorageList = new ObjectMapper().readValue(fileReader, new TypeReference<>() {
@@ -118,7 +117,6 @@ class UtilityStorageServiceTest {
             List<UtilityStorage> actualList = utilityStorageService.search("Oracle");
 
             // Assert
-//            Assertions.assertEquals(expectedList, actualList);
             Assertions.assertTrue(actualList.containsAll(expectedList));
         }
 

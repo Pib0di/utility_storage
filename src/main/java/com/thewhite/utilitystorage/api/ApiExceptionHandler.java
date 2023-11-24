@@ -20,7 +20,7 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public @ResponseBody ErrorDto processNotFoundException(ConstraintViolationException exception) {
+    public @ResponseBody ErrorDto processConstraintViolationException(ConstraintViolationException exception) {
         return ErrorDto.of(exception.getMessage());
     }
 
@@ -32,19 +32,19 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(BadInputDataForRating.class)
-    public @ResponseBody ErrorDto processNotFoundException(BadInputDataForRating exception) {
+    public @ResponseBody ErrorDto processBadInputDataForRating(BadInputDataForRating exception) {
         return ErrorDto.of(exception.getMessage());
     }
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public @ResponseBody ErrorDto processNotFoundException(HttpMessageNotReadableException exception) {
+    public @ResponseBody ErrorDto processHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
         return ErrorDto.of(exception.getMessage());
     }
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public @ResponseBody ErrorDto processNotFoundException(MethodArgumentNotValidException exception) {
+    public @ResponseBody ErrorDto processMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         System.out.println(exception.getMessage());
         return ErrorDto.of(Objects.requireNonNull(exception.getFieldError()).getDefaultMessage());
     }
