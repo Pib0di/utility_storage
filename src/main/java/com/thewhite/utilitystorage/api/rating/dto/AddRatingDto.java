@@ -17,5 +17,9 @@ public class AddRatingDto {
     @NotNull(message = "не указан идентификатор харанилища")
     UUID utilityStorageId;
 
+    @NotNull(message = "не указан рейтинг")
     NumberPoints point;
+
+    @NotNull(message = "не указано описание")
+    String description;
 }

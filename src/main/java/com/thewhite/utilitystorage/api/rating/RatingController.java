@@ -7,6 +7,7 @@ import com.thewhite.utilitystorage.api.rating.dto.RatingDto;
 import com.thewhite.utilitystorage.api.rating.mapper.RatingMapper;
 import com.thewhite.utilitystorage.service.rating.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,9 @@ public class RatingController {
 
     @DeleteMapping("delete/{id}")
     @Operation(description = "Удалить оценку по id")
+    @ApiResponse(description = "Оценка не найдена/удалена", responseCode = "404")
     public RatingDto delete(@PathVariable UUID id) {
+
         return mapper.toDto(service.delete(id));
     }
 

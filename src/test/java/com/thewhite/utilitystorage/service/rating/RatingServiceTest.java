@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.repository.RatingRepository;
 import com.thewhite.utilitystorage.service.rating.argument.AddRatingArgument;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -17,6 +16,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,9 +35,8 @@ class RatingServiceTest {
     List<Rating> expectedRatingList = new ArrayList<>();
     List<AddRatingArgument> AddRatingArgumentList = new ArrayList<>();
 
-    @SneakyThrows
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         FileReader fileReader = new FileReader("src/test/resources/rating_list.json");
         expectedRatingList = new ObjectMapper().readValue(fileReader, new TypeReference<>() {});
 
@@ -109,15 +108,12 @@ class RatingServiceTest {
     @Test
     void delete() {
         // Arrange
-        Rating expected = expectedRatingList.get(0);
         UUID id = UUID.fromString("724aebb0-251f-447b-a293-bee75c676ecc");
 
         // Act
-        Rating actual = service.delete(id);
+        service.delete(id);
 
         // Assert
-//        assertEquals(expected, actual);
-//        assertEquals(service.getList(id), new ArrayList<>());
 
         Mockito.verify(repository).delete(id);
     }

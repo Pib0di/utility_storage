@@ -1,6 +1,5 @@
 package com.thewhite.utilitystorage.model.rating;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,12 +14,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Rating {
 
-    @NotNull(message = "не указано id записи")
+    @NotNull(message = "не указан id оценки")
     UUID id;
 
-    @NotBlank(message = "не указан комментарий")
+    @NotNull(message = "не указан id записи")
     UUID utilityId;
 
-
+    @NotNull(message = "не указан комментарий")
     NumberPoints point;
+
+    @NotNull(message = "не указано описание")
+    String description;
 }
