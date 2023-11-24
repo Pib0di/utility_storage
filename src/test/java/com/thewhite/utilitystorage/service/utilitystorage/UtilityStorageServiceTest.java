@@ -117,7 +117,6 @@ class UtilityStorageServiceTest {
             List<UtilityStorage> actualList = utilityStorageService.search("Oracle");
 
             // Assert
-//            Assertions.assertEquals(expectedList, actualList);
             Assertions.assertTrue(actualList.containsAll(expectedList));
         }
 
