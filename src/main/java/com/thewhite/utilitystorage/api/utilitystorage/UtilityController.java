@@ -1,14 +1,14 @@
 package com.thewhite.utilitystorage.api.utilitystorage;
 
+import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.CreateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UpdateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
 import com.thewhite.utilitystorage.api.utilitystorage.mapper.UtilityMapper;
 import com.thewhite.utilitystorage.exception.NotFoundException;
-import com.thewhite.utilitystorage.models.UtilityStorage;
-import com.thewhite.utilitystorage.servicess.utilitystorage.UtilityStorageService;
-import com.thewhite.utilitystorage.action.argument.UtilityStorage.CreateUtilityArg;
-import com.thewhite.utilitystorage.action.argument.UtilityStorage.UpdateUtilityArg;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
+import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("utility")
+@RequestMapping("utility-storages")
 @RequiredArgsConstructor
 @Tag(name = "Контроллер для работы с хранилищем")
 public class UtilityController {
@@ -30,7 +30,7 @@ public class UtilityController {
     @PostMapping("create")
     @Operation(description = "Создать поле")
     public UtilityStorageDto create(@RequestBody CreateUtilityDto dto) throws NotFoundException {
-        CreateUtilityArg argument = mapper.toCreate(dto);
+        CreateUtilityArgument argument = mapper.toCreate(dto);
         return mapper.toDto(service.create(argument));
     }
 
@@ -38,7 +38,7 @@ public class UtilityController {
     @Operation(description = "Обновить поле")
     @ApiResponse(description = "Запись не обновлена", responseCode = "404")
     public UtilityStorageDto update(@RequestBody UpdateUtilityDto dto) {
-        UpdateUtilityArg arg = mapper.toUpdate(dto);
+        UpdateUtilityArgument arg = mapper.toUpdate(dto);
 
         return mapper.toDto(service.update(arg));
     }

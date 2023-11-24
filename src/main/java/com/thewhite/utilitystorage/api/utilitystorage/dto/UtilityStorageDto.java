@@ -11,7 +11,10 @@ import java.util.UUID;
 @Schema(description = "ДТО со всеми существующими полями")
 public class UtilityStorageDto {
     UUID id;
+
     String name;
+
     String description;
+
     String link;
 }

@@ -4,7 +4,7 @@ package com.thewhite.utilitystorage.api.utilitystorage;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.CreateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UpdateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
-import com.thewhite.utilitystorage.models.UtilityStorage;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
@@ -50,30 +50,6 @@ public class UtilityControllerIT {
     }
 
     @Test
-    void search(SoftAssertions assertions) {
-        // Act
-        List<UtilityStorageDto> response = webTestClient.get()
-                .uri("utility/search/bloc")
-                .exchange()
-                .expectStatus()
-                .isOk()
-                .expectBodyList(UtilityStorageDto.class)
-                .returnResult()
-                .getResponseBody();
-
-        //Assert
-        List<UtilityStorageDto> expectedDtoList = new ArrayList<>();
-        expectedDtoList.add(UtilityStorageDto.builder()
-                .id(id)
-                .name("bloc")
-                .description("стейтменеджмент")
-                .link("https://bloclibrary.dev/#/")
-                .build());
-
-        assertions.assertThat(response).isEqualTo(expectedDtoList);
-    }
-
-    @Test
     void create(SoftAssertions assertions) {
         //Arrange
         CreateUtilityDto dto = CreateUtilityDto.builder()
@@ -84,7 +60,7 @@ public class UtilityControllerIT {
 
         //Act
         UtilityStorageDto response = webTestClient.post()
-                .uri("utility/create")
+                .uri("utility-storages/create")
                 .contentType(APPLICATION_JSON)
                 .bodyValue(dto)
                 .exchange()
@@ -134,7 +110,7 @@ public class UtilityControllerIT {
 
         //Act
         UtilityStorageDto response = webTestClient.put()
-                .uri("utility/update")
+                .uri("utility-storages/update")
                 .contentType(APPLICATION_JSON)
                 .bodyValue(dto)
                 .exchange()
@@ -151,23 +127,24 @@ public class UtilityControllerIT {
     }
 
     @Test
-    void deleteUtility() {
+    void deleteUtility(SoftAssertions assertions) {
         //Act
         webTestClient
                 .delete()
-                .uri("utility/delete/" + id)
+                .uri("utility-storages/delete/" + id)
                 .exchange()
                 //Assert
                 .expectStatus()
                 .isOk();
 
+        assertions.assertThat(repository.get(id)).isEqualTo(null);
     }
 
     @Test
     void getUtility(SoftAssertions assertions) {
         //Act
         UtilityStorageDto response = webTestClient.get()
-                .uri("utility/get/" + id)
+                .uri("utility-storages/get/" + id)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -185,5 +162,29 @@ public class UtilityControllerIT {
 
         assertions.assertThat(response)
                 .isEqualTo(expectedDto);
+    }
+
+    @Test
+    void search(SoftAssertions assertions) {
+        // Act
+        List<UtilityStorageDto> response = webTestClient.get()
+                .uri("utility-storages/search/bloc")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBodyList(UtilityStorageDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        //Assert
+        List<UtilityStorageDto> expectedDtoList = new ArrayList<>();
+        expectedDtoList.add(UtilityStorageDto.builder()
+                .id(id)
+                .name("bloc")
+                .description("стейтменеджмент")
+                .link("https://bloclibrary.dev/#/")
+                .build());
+
+        assertions.assertThat(response).isEqualTo(expectedDtoList);
     }
 }
