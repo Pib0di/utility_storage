@@ -8,8 +8,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,23 +20,26 @@ import java.util.UUID;
 public class RatingService {
     RatingRepository ratingRepository;
 
+    @Transactional
     public Rating add(AddRatingArgument addRatingArgument) {
-
-        return ratingRepository.add(Rating.builder()
+        return ratingRepository.save(Rating.builder()
                 .id(UUID.randomUUID())
                 .utilityId(addRatingArgument.getUtilityStorageId())
                 .point(addRatingArgument.getPoint())
                 .build());
     }
 
+    @Transactional
     public Rating delete(UUID id) {
-        Rating result = ratingRepository.delete(id);
-        if (result == null) {
+        Optional<Rating> rating = ratingRepository.findById(id);
+        if (rating.isEmpty()) {
             throw new BadInputDataForRating("Запись по указанному id не найдена");
         }
-        return result;
+        ratingRepository.deleteById(id);
+        return rating.get();
     }
 
+    @Transactional(readOnly = true)
     public List<Rating> getList(UUID utilityId) {
         return ratingRepository.getList(utilityId);
     }

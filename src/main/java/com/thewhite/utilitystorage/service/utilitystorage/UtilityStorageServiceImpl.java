@@ -1,49 +1,64 @@
 package com.thewhite.utilitystorage.service.utilitystorage;
 
-import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
-import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
+import com.thewhite.utilitystorage.exception.BadInputDataForRating;
 import com.thewhite.utilitystorage.exception.NotFoundException;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class UtilityStorageServiceImpl implements UtilityStorageService {
+public class UtilityStorageServiceImpl {
     UtilityStorageRepository utilityStorageRepository;
 
-    @Override
+    @Transactional
     public UtilityStorage create(CreateUtilityArgument createUtility) throws NotFoundException {
-        UUID id = UUID.randomUUID();
-        return utilityStorageRepository.create(UtilityStorage.builder()
-                .id(id)
+        return utilityStorageRepository.save(UtilityStorage.builder()
+                .id(UUID.randomUUID())
                 .name(createUtility.getName())
                 .link(createUtility.getLink())
                 .description(createUtility.getDescription())
                 .build());
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public UtilityStorage get(UUID id) {
-        return utilityStorageRepository.get(id);
+        Optional<UtilityStorage> utilityStorage = utilityStorageRepository.findById(id);
+        if (utilityStorage.isEmpty()) {
+            throw new BadInputDataForRating("Запись по указанному id не найдена");
+        }
+        return utilityStorage.get();
     }
 
-    @Override
-    public List<UtilityStorage> search(String searchLine) {
-        return utilityStorageRepository.search(searchLine);
+    @Transactional(readOnly = true)
+    public List<UtilityStorage> searchByName(String name) {
+        return utilityStorageRepository.searchByName(name);
     }
 
-    @Override
+    @Transactional(readOnly = true)
+    public List<UtilityStorage> searchByDescription(String description) {
+        return utilityStorageRepository.searchByDescription(description);
+    }
+
+    @Transactional
     public UtilityStorage update(@NonNull UpdateUtilityArgument updateUtilityArgument) {
-        return utilityStorageRepository.update(UtilityStorage.builder()
+        Optional<UtilityStorage> utilityStorage = utilityStorageRepository.findById(updateUtilityArgument.getId());
+        if (utilityStorage.isEmpty()) {
+            throw new BadInputDataForRating("Запись по указанному id не найдена");
+        }
+        return utilityStorageRepository.save(UtilityStorage.builder()
                 .id(updateUtilityArgument.getId())
                 .name(updateUtilityArgument.getName())
                 .description(updateUtilityArgument.getDescription())
@@ -51,9 +66,14 @@ public class UtilityStorageServiceImpl implements UtilityStorageService {
                 .build());
     }
 
-    @Override
+    @Transactional
     public UtilityStorage delete(UUID id) {
-        return utilityStorageRepository.delete(id);
+        Optional<UtilityStorage> utilityStorage = utilityStorageRepository.findById(id);
+        if (utilityStorage.isEmpty()) {
+            throw new BadInputDataForRating("Запись по указанному id не найдена");
+        }
+        utilityStorageRepository.deleteById(id);
+        return  utilityStorage.get();
     }
 
 }
