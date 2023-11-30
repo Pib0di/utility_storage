@@ -1,13 +1,14 @@
 package com.thewhite.utilitystorage.service.utilitystorage;
 
-import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
 import com.thewhite.utilitystorage.exception.NotFoundException;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import lombok.NonNull;
 
 import java.util.List;
 import java.util.UUID;
+
 
 public interface UtilityStorageService {
 

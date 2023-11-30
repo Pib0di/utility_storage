@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,8 +26,8 @@ import java.util.UUID;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureWebClient
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(SoftAssertionsExtension.class)
 class RatingControllerIT {
 
@@ -50,7 +51,7 @@ class RatingControllerIT {
         ratingMap.put(
                 id, Rating.builder()
                         .id(id)
-                        .utilityId(utilityId)
+                        .utilityStorageId(utilityId)
                         .point(NumberPoints.ONE)
                         .build()
         );
@@ -62,7 +63,7 @@ class RatingControllerIT {
                         .id(utilityId)
                         .name("bloc")
                         .description("utilityStorage которому будет присваиваться рейтинг")
-                        .link("https://bloclibrary.dev/#/")
+                        .link(Collections.singleton("https://bloclibrary.dev/#/"))
                         .build()
         );
 
@@ -92,7 +93,7 @@ class RatingControllerIT {
         //Assert
         RatingDto expected = RatingDto.builder()
                 .id(response.getId())
-                .utilityId(utilityId)
+                .utilityStorageId(utilityId)
                 .point(NumberPoints.THREE)
                 .build();
 

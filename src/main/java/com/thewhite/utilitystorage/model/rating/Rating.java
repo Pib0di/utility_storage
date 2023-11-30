@@ -1,10 +1,10 @@
 package com.thewhite.utilitystorage.model.rating;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 @Getter
@@ -23,10 +23,11 @@ public class Rating {
 
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.UUID)
-    UUID utilityId;
+    UUID utilityStorageId;
 
     @Column(nullable = false)
-    NumberPoints point;
+    @JdbcTypeCode(SqlTypes.SMALLINT)
+     NumberPoints point;
 
     @Column(nullable = false)
     String description;

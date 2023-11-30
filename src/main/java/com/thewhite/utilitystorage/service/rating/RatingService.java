@@ -1,15 +1,23 @@
 package com.thewhite.utilitystorage.service.rating;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.thewhite.utilitystorage.exception.BadInputDataForRating;
+import com.thewhite.utilitystorage.model.rating.NumberPoints;
+import com.thewhite.utilitystorage.model.rating.QRating;
 import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.repository.RatingRepository;
 import com.thewhite.utilitystorage.service.rating.argument.AddRatingArgument;
 import lombok.AccessLevel;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,14 +26,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class RatingService {
-    RatingRepository ratingRepository;
+    private final RatingRepository ratingRepository;
+
+    @PersistenceContext
+    private final EntityManager entityManager;
+    private final QRating qRating = QRating.rating;
 
     @Transactional
-    public Rating add(AddRatingArgument addRatingArgument) {
+    public Rating add(@NonNull AddRatingArgument addRatingArgument) {
         return ratingRepository.save(Rating.builder()
                 .id(UUID.randomUUID())
-                .utilityId(addRatingArgument.getUtilityStorageId())
+                .utilityStorageId(addRatingArgument.getUtilityStorageId())
                 .point(addRatingArgument.getPoint())
+                .description(addRatingArgument.getDescription())
                 .build());
     }
 
@@ -39,9 +52,32 @@ public class RatingService {
         return rating.get();
     }
 
-    @Transactional(readOnly = true)
-    public List<Rating> getList(UUID utilityId) {
-        return ratingRepository.getList(utilityId);
+    @Transactional
+    public void deleteAllByUtilityId(UUID utilityStorageId) {
+        ratingRepository.deleteAllByUtilityId(utilityStorageId);
     }
 
+    @Transactional(readOnly = true)
+    public List<Rating> getList(UUID utilityStorageId, NumberPoints point, String sortType, Pageable pageable) {
+
+        Predicate predicate = qRating.utilityStorageId.eq(utilityStorageId);
+        Predicate filter = qRating.point.eq(point);
+
+        var order = switch (sortType) {
+            case "desc":
+                yield qRating.point.desc();
+            default:
+                yield qRating.point.asc();
+        };
+
+        return new JPAQuery<Rating>(entityManager)
+                .select(qRating)
+                .from(qRating)
+                .where(predicate)
+                .where(filter)
+                .orderBy(order)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+    }
 }

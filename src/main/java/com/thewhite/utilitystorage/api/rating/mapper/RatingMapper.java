@@ -1,6 +1,6 @@
 package com.thewhite.utilitystorage.api.rating.mapper;
 
-import com.thewhite.utilitystorage.action.rating.add.CreateRatingArgument;
+import com.thewhite.utilitystorage.action.rating.add.AddRatingActionArgument;
 import com.thewhite.utilitystorage.api.rating.dto.AddRatingDto;
 import com.thewhite.utilitystorage.api.rating.dto.RatingDto;
 import com.thewhite.utilitystorage.model.rating.Rating;
@@ -15,7 +15,8 @@ public interface RatingMapper {
 
     RatingDto toDto(Rating addRatingDto);
 
-    CreateRatingArgument toCreateRatingArgument(AddRatingDto addRatingDto);
+    AddRatingActionArgument toCreateRatingArgument(AddRatingDto addRatingDto);
 
     List<RatingDto> toDtoRatingList(List<Rating> ratingList);
+
 }

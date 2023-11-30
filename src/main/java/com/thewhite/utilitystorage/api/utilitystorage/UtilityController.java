@@ -1,18 +1,25 @@
 package com.thewhite.utilitystorage.api.utilitystorage;
 
-import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
-import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
+import com.thewhite.utilitystorage.action.utilityStorage.delete.DeleteUtilityStorageAction;
+import com.thewhite.utilitystorage.action.utilityStorage.delete.DeleteUtilityStorageArgument;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.CreateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UpdateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
 import com.thewhite.utilitystorage.api.utilitystorage.mapper.UtilityMapper;
 import com.thewhite.utilitystorage.exception.NotFoundException;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
-import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageService;
+import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageServiceImpl;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +29,11 @@ import java.util.UUID;
 @RequestMapping("utility-storages")
 @RequiredArgsConstructor
 @Tag(name = "Контроллер для работы с хранилищем")
+@Validated
 public class UtilityController {
 
-    private final UtilityStorageService service;
+    private final UtilityStorageServiceImpl service;
+    private final DeleteUtilityStorageAction deleteUtilityStorageAction;
     private final UtilityMapper mapper;
 
     @PostMapping("create")
@@ -47,7 +56,12 @@ public class UtilityController {
     @Operation(description = "Удалить поле")
     @ApiResponse(description = "Запись не найдена", responseCode = "404")
     public UtilityStorageDto deleteUtility(@PathVariable UUID id) {
-        UtilityStorage utilityStorage = service.delete(id);
+
+        DeleteUtilityStorageArgument deleteUtilityStorageArgument = DeleteUtilityStorageArgument.builder()
+                .utilityStorageId(id)
+                .build();
+
+        UtilityStorage utilityStorage = deleteUtilityStorageAction.delete(deleteUtilityStorageArgument);
 
         return mapper.toDto(utilityStorage);
     }
@@ -61,12 +75,20 @@ public class UtilityController {
         return mapper.toDto(utilityStorage);
     }
 
-    @GetMapping("search/{str}")
-    @Operation(description = "Найти поле (без учета регистра)")
-    @ApiResponse(description = "Записи не найдены", responseCode = "404")
-    public List<UtilityStorageDto> search(@PathVariable String str) {
-        List<UtilityStorage> utilityStorageList = service.search(str);
+    @GetMapping("get/{findStr}")
+    @Operation(description = "Получить поле")
+    @ApiResponse(description = "Запись не найдена", responseCode = "404")
+    public List<UtilityStorageDto> search(
+            @PathVariable() String findStr,
+            @RequestParam(defaultValue = "name") String sortType,
+            @RequestParam(defaultValue = "name") String typeRequiredField,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "200") @Min(1) @Max(200) int size)
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        List<UtilityStorage> utilityStorage = service.search(findStr, sortType, typeRequiredField, pageable);
 
-        return mapper.toDtoList(utilityStorageList);
+        return mapper.toDtoList(utilityStorage);
     }
+
 }

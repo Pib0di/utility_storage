@@ -8,7 +8,8 @@ import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
@@ -21,8 +22,8 @@ import java.util.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureWebClient
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(SoftAssertionsExtension.class)
 public class UtilityControllerIT {
 
@@ -34,15 +35,18 @@ public class UtilityControllerIT {
 
     UUID id = UUID.fromString("36b63a92-8dec-4fc6-b4d1-bf4d3d698f0f");
     final Map<UUID, UtilityStorage> utilityStorageMap = new HashMap<>();
+    Set<String> setLink = new HashSet<>();
 
     @BeforeEach
     void setUp() {
+        setLink.add("https://bloclibrary.dev/#/");
+
         utilityStorageMap.put(
                 id, UtilityStorage.builder()
                         .id(id)
                         .name("bloc")
                         .description("стейтменеджмент")
-                        .link("https://bloclibrary.dev/#/")
+                        .link(setLink)
                         .build()
         );
 
@@ -55,7 +59,7 @@ public class UtilityControllerIT {
         CreateUtilityDto dto = CreateUtilityDto.builder()
                 .name("bloc")
                 .description("стейтменеджмент")
-                .link("https://bloclibrary.dev/#/")
+                .link(setLink)
                 .build();
 
         //Act
@@ -75,13 +79,13 @@ public class UtilityControllerIT {
                 .id(response.getId())
                 .name("bloc")
                 .description("стейтменеджмент")
-                .link("https://bloclibrary.dev/#/")
+                .link(setLink)
                 .build();
 
         assertions.assertThat(response)
                 .isEqualTo(expected);
 
-        assertions.assertThat(repository.get(response.getId()))
+        assertions.assertThat(repository.findById(response.getId()))
                 .isEqualTo(UtilityStorage.builder()
                         .id(response.getId())
                         .link(response.getLink())
@@ -98,14 +102,14 @@ public class UtilityControllerIT {
                 .id(id)
                 .name("bloc")
                 .description("стейтменеджмент")
-                .link("https://bloclibrary.dev/#/")
+                .link(setLink)
                 .build();
 
         UtilityStorageDto expected = UtilityStorageDto.builder()
                 .id(id)
                 .name("bloc")
                 .description("стейтменеджмент")
-                .link("https://bloclibrary.dev/#/")
+                .link(setLink)
                 .build();
 
         //Act
@@ -137,7 +141,7 @@ public class UtilityControllerIT {
                 .expectStatus()
                 .isOk();
 
-        assertions.assertThat(repository.get(id)).isEqualTo(null);
+        assertions.assertThat(repository.findById(id)).isEqualTo(null);
     }
 
     @Test
@@ -157,7 +161,7 @@ public class UtilityControllerIT {
                 .id(response.getId())
                 .name("bloc")
                 .description("стейтменеджмент")
-                .link("https://bloclibrary.dev/#/")
+                .link(setLink)
                 .build();
 
         assertions.assertThat(response)
@@ -182,7 +186,7 @@ public class UtilityControllerIT {
                 .id(id)
                 .name("bloc")
                 .description("стейтменеджмент")
-                .link("https://bloclibrary.dev/#/")
+                .link(setLink)
                 .build());
 
         assertions.assertThat(response).isEqualTo(expectedDtoList);

@@ -1,17 +1,20 @@
-
 package com.thewhite.utilitystorage.repository;
 
 import com.thewhite.utilitystorage.model.rating.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.UUID;
 
-public interface RatingRepository extends JpaRepository<Rating, UUID>, QuerydslPredicateExecutor<Rating> {
+@Component
+public interface RatingRepository extends JpaRepository<Rating, UUID>, QuerydslPredicateExecutor<Rating>, PagingAndSortingRepository<Rating, UUID> {
+    @Modifying
+    @Query("delete from Rating rating where rating.utilityStorageId = :utilityStorageId")
+    void deleteAllByUtilityId(@Param("utilityStorageId") UUID utilityStorageId);
 
-    @Query("select rating from Rating rating where rating.utilityId = :utilityId")
-    List<Rating> getList(@Param("utilityId") UUID utilityId);
 }
