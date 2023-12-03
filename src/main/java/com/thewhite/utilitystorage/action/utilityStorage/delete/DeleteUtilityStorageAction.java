@@ -3,7 +3,7 @@ package com.thewhite.utilitystorage.action.utilityStorage.delete;
 import com.thewhite.utilitystorage.exception.BadInputDataForRating;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.service.rating.RatingService;
-import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageServiceImpl;
+import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeleteUtilityStorageAction {
     private final RatingService ratingService;
-    private final UtilityStorageServiceImpl utilityStorageService;
+    private final UtilityStorageService utilityStorageService;
 
     public UtilityStorage delete(DeleteUtilityStorageArgument argument) {
         UtilityStorage result = utilityStorageService.delete(argument.getUtilityStorageId());

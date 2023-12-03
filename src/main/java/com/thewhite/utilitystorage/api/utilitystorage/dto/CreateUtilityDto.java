@@ -1,10 +1,10 @@
 package com.thewhite.utilitystorage.api.utilitystorage.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Value

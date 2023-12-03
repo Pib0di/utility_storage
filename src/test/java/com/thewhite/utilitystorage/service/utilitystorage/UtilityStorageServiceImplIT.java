@@ -11,7 +11,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +22,7 @@ import java.util.List;
 @ExtendWith(SoftAssertionsExtension.class)
 @DBRider
 class UtilityStorageServiceImplIT {
-
-    @Autowired
-    UtilityStorageServiceImpl service;
+    UtilityStorageService service;
 
     @Test
     @DataSet("dataTest/service/utilityStorage/dataSet_search.json")

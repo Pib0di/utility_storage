@@ -1,10 +1,10 @@
 package com.thewhite.utilitystorage.service.rating.argument;
 
 import com.thewhite.utilitystorage.model.rating.NumberPoints;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Value

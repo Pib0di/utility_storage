@@ -8,20 +8,20 @@ import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
 import com.thewhite.utilitystorage.api.utilitystorage.mapper.UtilityMapper;
 import com.thewhite.utilitystorage.exception.NotFoundException;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
-import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageServiceImpl;
+import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageService;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,7 +32,7 @@ import java.util.UUID;
 @Validated
 public class UtilityController {
 
-    private final UtilityStorageServiceImpl service;
+    private final UtilityStorageService service;
     private final DeleteUtilityStorageAction deleteUtilityStorageAction;
     private final UtilityMapper mapper;
 

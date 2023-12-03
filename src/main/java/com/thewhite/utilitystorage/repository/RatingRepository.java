@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
 public interface RatingRepository extends JpaRepository<Rating, UUID>, QuerydslPredicateExecutor<Rating>, PagingAndSortingRepository<Rating, UUID> {
+
     @Modifying
     @Query("delete from Rating rating where rating.utilityStorageId = :utilityStorageId")
     void deleteAllByUtilityId(@Param("utilityStorageId") UUID utilityStorageId);

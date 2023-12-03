@@ -4,17 +4,15 @@ import com.thewhite.utilitystorage.exception.BadInputDataForRating;
 import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.service.rating.RatingService;
 import com.thewhite.utilitystorage.service.rating.argument.AddRatingArgument;
-import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageServiceImpl;
+import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
-@Validated
 @Component
 @RequiredArgsConstructor
 public class AddRatingAction {
     private final RatingService ratingService;
-    private final UtilityStorageServiceImpl utilityStorageService;
+    private final UtilityStorageService utilityStorageService;
 
     public Rating add(AddRatingActionArgument argument) {
         if (utilityStorageService.get(argument.getUtilityStorageId()) == null) {

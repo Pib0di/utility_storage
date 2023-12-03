@@ -1,9 +1,9 @@
 package com.thewhite.utilitystorage.service.utilitystorage.argument;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Value

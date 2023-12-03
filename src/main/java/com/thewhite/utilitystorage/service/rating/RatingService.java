@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,9 +25,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class RatingService {
-    private final RatingRepository ratingRepository;
 
-    @PersistenceContext
+    private final RatingRepository ratingRepository;
     private final EntityManager entityManager;
     private final QRating qRating = QRating.rating;
 

@@ -7,11 +7,8 @@ import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.util.ResourceUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +17,6 @@ import java.util.UUID;
 @ExtendWith(SoftAssertionsExtension.class)
 class RatingRepositoryIT {
 
-    @Autowired
     private RatingRepository repository;
 
     @Test
