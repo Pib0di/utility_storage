@@ -18,11 +18,9 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    @JdbcTypeCode(SqlTypes.UUID)
     UUID id;
 
     @Column(nullable = false)
-    @JdbcTypeCode(SqlTypes.UUID)
     UUID utilityStorageId;
 
     @Column(nullable = false)

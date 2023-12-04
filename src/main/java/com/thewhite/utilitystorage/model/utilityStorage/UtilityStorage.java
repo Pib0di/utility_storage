@@ -1,8 +1,6 @@
 package com.thewhite.utilitystorage.model.utilityStorage;
 
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,7 +17,6 @@ public class UtilityStorage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    @JdbcTypeCode(SqlTypes.UUID)
     UUID id;
 
     @Column(nullable = false)

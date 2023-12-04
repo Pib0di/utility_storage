@@ -1,7 +1,6 @@
 package com.thewhite.utilitystorage.service.rating;
 
 import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.thewhite.utilitystorage.exception.BadInputDataForRating;
 import com.thewhite.utilitystorage.model.rating.NumberPoints;
 import com.thewhite.utilitystorage.model.rating.QRating;
@@ -56,26 +55,15 @@ public class RatingService {
     }
 
     @Transactional(readOnly = true)
-    public List<Rating> getList(UUID utilityStorageId, NumberPoints point, String sortType, Pageable pageable) {
+    public List<Rating> getList(UUID utilityStorageId, Pageable pageable) {
 
-        Predicate predicate = qRating.utilityStorageId.eq(utilityStorageId);
-        Predicate filter = qRating.point.eq(point);
+        System.out.println(NumberPoints.valueOf(pageable.getSort().get().toString()));
+        NumberPoints numberPoints = NumberPoints.valueOf(pageable.getSort().get().toString());
 
-        var order = switch (sortType) {
-            case "desc":
-                yield qRating.point.desc();
-            default:
-                yield qRating.point.asc();
-        };
+        Predicate predicate = qRating
+                .utilityStorageId.eq(utilityStorageId)
+                .and(qRating.point.eq(numberPoints));
 
-        return new JPAQuery<Rating>(entityManager)
-                .select(qRating)
-                .from(qRating)
-                .where(predicate)
-                .where(filter)
-                .orderBy(order)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+        return ratingRepository.findAll(predicate, pageable).toList();
     }
 }

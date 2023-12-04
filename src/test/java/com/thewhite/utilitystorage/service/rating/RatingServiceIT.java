@@ -62,7 +62,7 @@ class RatingServiceIT {
         List<Rating> expected = ResourceUtils.parseJson("dataTest/service/rating/actual_rating_list.json",  new TypeReference<>() {});
 
         // Act
-        List<Rating> actual = service.getList(utilityStorageId, point, sortType, pageable);
+        List<Rating> actual = service.getList(utilityStorageId, pageable);
 
         // Assert
         softly.assertThat(actual)

@@ -5,23 +5,22 @@ import com.thewhite.utilitystorage.action.rating.add.AddRatingActionArgument;
 import com.thewhite.utilitystorage.api.rating.dto.AddRatingDto;
 import com.thewhite.utilitystorage.api.rating.dto.RatingDto;
 import com.thewhite.utilitystorage.api.rating.mapper.RatingMapper;
-import com.thewhite.utilitystorage.model.rating.NumberPoints;
 import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.service.rating.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @RestController
 @RequestMapping("ratings")
@@ -42,25 +41,20 @@ public class RatingController {
         return mapper.toDto(addRatingAction.add(addRatingActionArgument));
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete/")
     @Operation(description = "Удалить оценку по id")
     @ApiResponse(description = "Оценка не найдена/удалена", responseCode = "404")
-    public RatingDto delete(@PathVariable UUID id) {
+    public RatingDto delete(@RequestParam UUID id) {
 
         return mapper.toDto(service.delete(id));
     }
 
-    @GetMapping("list/{utilityStorageId}/filter/{point}")
+    @GetMapping("list/")
     @Operation(description = "Получить список оценок по id записи + фильтр по оценке от 0 до 4")
-    public List<RatingDto> getList(@PathVariable UUID utilityStorageId,
-                                   @PathVariable NumberPoints point,
-                                   @RequestParam(defaultValue = "desc") String sortType,
-                                   @RequestParam(defaultValue = "0") @Min(0) int page,
-                                   @RequestParam(defaultValue = "200") @Min(1) @Max(200) int size) {
+    public List<RatingDto> getList(@RequestParam UUID utilityStorageId,
+                                   @PageableDefault(size = 10, page = 0, sort = "ONE", direction = DESC) Pageable pageable) {
 
-        Pageable pageable = PageRequest.of(page, size);
-
-        List<Rating> ratingList = service.getList(utilityStorageId, point, sortType, pageable);
+        List<Rating> ratingList = service.getList(utilityStorageId, pageable);
 
         return mapper.toDtoRatingList(ratingList);
     }
