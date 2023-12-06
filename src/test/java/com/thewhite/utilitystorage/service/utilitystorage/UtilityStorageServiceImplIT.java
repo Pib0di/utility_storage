@@ -36,7 +36,7 @@ class UtilityStorageServiceImplIT {
         List<Rating> expected = ResourceUtils.parseJson("dataTest/service/utilityStorage/search_expected.json",  new TypeReference<>() {});
 
         // Act
-        List<UtilityStorage> actual = service.search(typeRequiredField, findStr, sortType, pageable);
+        List<UtilityStorage> actual = service.search(typeRequiredField, pageable);
 
         // Assert
         softly.assertThat(actual)

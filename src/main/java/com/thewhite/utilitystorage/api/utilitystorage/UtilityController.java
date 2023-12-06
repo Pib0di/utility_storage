@@ -1,7 +1,5 @@
 package com.thewhite.utilitystorage.api.utilitystorage;
 
-import com.thewhite.utilitystorage.action.utilityStorage.delete.DeleteUtilityStorageAction;
-import com.thewhite.utilitystorage.action.utilityStorage.delete.DeleteUtilityStorageArgument;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.CreateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UpdateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
@@ -15,15 +13,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @RestController
 @RequestMapping("utility-storages")
@@ -33,12 +32,11 @@ import java.util.UUID;
 public class UtilityController {
 
     private final UtilityStorageService service;
-    private final DeleteUtilityStorageAction deleteUtilityStorageAction;
     private final UtilityMapper mapper;
 
     @PostMapping("create")
     @Operation(description = "Создать поле")
-    public UtilityStorageDto create(@RequestBody CreateUtilityDto dto) throws NotFoundException {
+    public UtilityStorageDto create(@RequestBody @Valid CreateUtilityDto dto) throws NotFoundException {
         CreateUtilityArgument argument = mapper.toCreate(dto);
         return mapper.toDto(service.create(argument));
     }
@@ -46,7 +44,7 @@ public class UtilityController {
     @PutMapping("update")
     @Operation(description = "Обновить поле")
     @ApiResponse(description = "Запись не обновлена", responseCode = "404")
-    public UtilityStorageDto update(@RequestBody UpdateUtilityDto dto) {
+    public UtilityStorageDto update(@RequestBody @Valid  UpdateUtilityDto dto) {
         UpdateUtilityArgument arg = mapper.toUpdate(dto);
 
         return mapper.toDto(service.update(arg));
@@ -57,11 +55,7 @@ public class UtilityController {
     @ApiResponse(description = "Запись не найдена", responseCode = "404")
     public UtilityStorageDto deleteUtility(@PathVariable UUID id) {
 
-        DeleteUtilityStorageArgument deleteUtilityStorageArgument = DeleteUtilityStorageArgument.builder()
-                .utilityStorageId(id)
-                .build();
-
-        UtilityStorage utilityStorage = deleteUtilityStorageAction.delete(deleteUtilityStorageArgument);
+        UtilityStorage utilityStorage = service.delete(id);
 
         return mapper.toDto(utilityStorage);
     }
@@ -80,13 +74,9 @@ public class UtilityController {
     @ApiResponse(description = "Запись не найдена", responseCode = "404")
     public List<UtilityStorageDto> search(
             @PathVariable() String findStr,
-            @RequestParam(defaultValue = "name") String sortType,
-            @RequestParam(defaultValue = "name") String typeRequiredField,
-            @RequestParam(defaultValue = "0") @Min(0) int page,
-            @RequestParam(defaultValue = "200") @Min(1) @Max(200) int size)
-    {
-        Pageable pageable = PageRequest.of(page, size);
-        List<UtilityStorage> utilityStorage = service.search(findStr, sortType, typeRequiredField, pageable);
+            @PageableDefault(size = 10, page = 0, sort = "name", direction = DESC) Pageable pageable) {
+
+        List<UtilityStorage> utilityStorage = service.search(findStr, pageable);
 
         return mapper.toDtoList(utilityStorage);
     }
