@@ -1,6 +1,7 @@
 package com.thewhite.utilitystorage.api.utilitystorage;
 
 import com.thewhite.utilitystorage.api.utilitystorage.dto.CreateUtilityDto;
+import com.thewhite.utilitystorage.api.utilitystorage.dto.SearchUtilityStorageDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UpdateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
 import com.thewhite.utilitystorage.api.utilitystorage.mapper.UtilityMapper;
@@ -8,6 +9,7 @@ import com.thewhite.utilitystorage.exception.NotFoundException;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.service.utilitystorage.UtilityStorageService;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.SearchUtilityStorageArgument;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -69,14 +71,16 @@ public class UtilityController {
         return mapper.toDto(utilityStorage);
     }
 
-    @GetMapping("get/{findStr}")
+    @GetMapping("get/ ")
     @Operation(description = "Получить поле")
     @ApiResponse(description = "Запись не найдена", responseCode = "404")
     public List<UtilityStorageDto> search(
-            @PathVariable() String findStr,
+            @RequestBody @Valid SearchUtilityStorageDto dto,
             @PageableDefault(size = 10, page = 0, sort = "name", direction = DESC) Pageable pageable) {
 
-        List<UtilityStorage> utilityStorage = service.search(findStr, pageable);
+        SearchUtilityStorageArgument argument = mapper.toSearch(dto);
+
+        List<UtilityStorage> utilityStorage = service.search(argument, pageable);
 
         return mapper.toDtoList(utilityStorage);
     }

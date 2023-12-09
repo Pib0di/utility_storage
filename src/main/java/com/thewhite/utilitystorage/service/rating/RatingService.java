@@ -1,6 +1,6 @@
 package com.thewhite.utilitystorage.service.rating;
 
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.thewhite.utilitystorage.exception.BadInputDataForRating;
 import com.thewhite.utilitystorage.model.rating.NumberPoints;
 import com.thewhite.utilitystorage.model.rating.QRating;
@@ -9,6 +9,7 @@ import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.RatingRepository;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
 import com.thewhite.utilitystorage.service.rating.argument.AddRatingArgument;
+import com.thewhite.utilitystorage.service.rating.argument.SearchRatingArgument;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class RatingService {
     private final UtilityStorageRepository utilityStorageRepository;
     private final QRating qRating = QRating.rating;
 
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Transactional
     public Rating add(@NonNull @Valid AddRatingArgument addRatingArgument) {
         UtilityStorage utilityStorage = utilityStorageRepository.findById(addRatingArgument.getUtilityStorageId())
                 .orElseThrow(() -> new BadInputDataForRating("Запись с узказанным UtilityStorageId не найдена"));
@@ -58,17 +59,16 @@ public class RatingService {
     }
 
     @Transactional(readOnly = true)
-    public List<Rating> getList(UUID utilityStorageId, Pageable pageable) {
+    public List<Rating> getList(UUID utilityStorageId, SearchRatingArgument searchRatingArgument, Pageable pageable) {
         UtilityStorage utilityStorage = utilityStorageRepository.findById(utilityStorageId)
                 .orElseThrow(() -> new BadInputDataForRating("Запись с узказанным UtilityStorageId не найдена"));
 
         System.out.println(NumberPoints.valueOf(pageable.getSort().get().toString()));
-        NumberPoints numberPoints = NumberPoints.valueOf(pageable.getSort().get().toString());
+        NumberPoints numberPoints = searchRatingArgument.getPoint();
 
-        Predicate predicate = qRating
-                .utilityStorage.eq(utilityStorage)
-                .and(qRating.point.eq(numberPoints));
+        BooleanExpression expression = qRating.utilityStorage.eq(utilityStorage);
+        expression = numberPoints != null ? expression.and(qRating.point.eq(numberPoints)) : expression;
 
-        return ratingRepository.findAll(predicate, pageable).toList();
+        return ratingRepository.findAll(expression, pageable).toList();
     }
 }

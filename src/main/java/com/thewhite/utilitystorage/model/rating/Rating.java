@@ -30,7 +30,7 @@ public class Rating {
     @Column(nullable = false)
     String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     UtilityStorage utilityStorage;
 }

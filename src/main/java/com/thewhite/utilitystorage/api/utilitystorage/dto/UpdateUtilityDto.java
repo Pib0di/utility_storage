@@ -21,7 +21,6 @@ public class UpdateUtilityDto {
     @NotNull(message = "не указано описание")
     String description;
 
-
     @NotNull(message = "не указаны ссылки")
     Set<String> link;
 }

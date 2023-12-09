@@ -1,12 +1,13 @@
 package com.thewhite.utilitystorage.service.utilitystorage;
 
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.thewhite.utilitystorage.exception.BadInputDataForRating;
 import com.thewhite.utilitystorage.exception.NotFoundException;
 import com.thewhite.utilitystorage.model.utilityStorage.QUtilityStorage;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.CreateUtilityArgument;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.SearchUtilityStorageArgument;
 import com.thewhite.utilitystorage.service.utilitystorage.argument.UpdateUtilityArgument;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -31,7 +32,7 @@ public class UtilityStorageService {
     private final QUtilityStorage qUtilityStorage = QUtilityStorage.utilityStorage;
 
 
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    @Transactional
     public UtilityStorage create(@Valid CreateUtilityArgument createUtility) throws NotFoundException {
         return utilityStorageRepository.save(UtilityStorage.builder()
                 .id(UUID.randomUUID())
@@ -48,16 +49,17 @@ public class UtilityStorageService {
     }
 
     @Transactional(readOnly = true)
-    public List<UtilityStorage> search(String findStr, Pageable pageable) {
+    public List<UtilityStorage> search(SearchUtilityStorageArgument argument, Pageable pageable) {
 
-        Predicate predicate = switch (pageable.getSort().get().toString()) {
-            case "name":
-                yield qUtilityStorage.name.eq(findStr);
-            default:
-                yield qUtilityStorage.description.eq(findStr);
-        };
+        BooleanExpression expression = qUtilityStorage.description.containsIgnoreCase(
+                argument.getDescription() != null ? argument.getDescription() : ""
+        );
 
-        return utilityStorageRepository.findAll(predicate, pageable).toList();
+        expression = argument.getName() != null
+                ? expression.and(qUtilityStorage.name.containsIgnoreCase(argument.getName()))
+                : expression;
+
+        return utilityStorageRepository.findAll(expression, pageable).toList();
     }
 
 

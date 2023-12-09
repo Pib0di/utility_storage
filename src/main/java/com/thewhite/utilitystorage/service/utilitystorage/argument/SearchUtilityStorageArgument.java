@@ -1,5 +1,11 @@
 package com.thewhite.utilitystorage.service.utilitystorage.argument;
 
-public class SearchUtilityStorageArgument {
+import lombok.Builder;
+import lombok.Value;
 
+@Value
+@Builder
+public class SearchUtilityStorageArgument {
+    String name;
+    String description;
 }

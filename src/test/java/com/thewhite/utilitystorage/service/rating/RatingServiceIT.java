@@ -31,7 +31,7 @@ class RatingServiceIT {
         Rating expected = Rating.builder()
                 .description("description")
                 .point(NumberPoints.FOUR)
-                .utilityStorageId(UUID.fromString("a9147542-4860-4c67-9d2a-f506c2b7c921"))
+                .utilityStorage(UUID.fromString("a9147542-4860-4c67-9d2a-f506c2b7c921"))
                 .build();
         AddRatingArgument addRatingArgument = AddRatingArgument.builder()
                 .utilityStorageId(expected.getUtilityStorageId())

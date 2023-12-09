@@ -4,9 +4,11 @@ import com.thewhite.utilitystorage.action.rating.add.AddRatingAction;
 import com.thewhite.utilitystorage.action.rating.add.AddRatingActionArgument;
 import com.thewhite.utilitystorage.api.rating.dto.AddRatingDto;
 import com.thewhite.utilitystorage.api.rating.dto.RatingDto;
+import com.thewhite.utilitystorage.api.rating.dto.SearchRatingDto;
 import com.thewhite.utilitystorage.api.rating.mapper.RatingMapper;
 import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.service.rating.RatingService;
+import com.thewhite.utilitystorage.service.rating.argument.SearchRatingArgument;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -52,9 +54,11 @@ public class RatingController {
     @GetMapping("list/")
     @Operation(description = "Получить список оценок по id записи + фильтр по оценке от 0 до 4")
     public List<RatingDto> getList(@RequestParam UUID utilityStorageId,
-                                   @PageableDefault(size = 10, page = 0, sort = "ONE", direction = DESC) Pageable pageable) {
+                                   @Valid SearchRatingDto searchRatingDto,
+                                   @PageableDefault(size = 10, page = 0, sort = "point", direction = DESC) Pageable pageable) {
 
-        List<Rating> ratingList = service.getList(utilityStorageId, pageable);
+        SearchRatingArgument searchRatingArgument = mapper.toCreateRatingArgument(searchRatingDto);
+        List<Rating> ratingList = service.getList(utilityStorageId, searchRatingArgument, pageable);
 
         return mapper.toDtoRatingList(ratingList);
     }
