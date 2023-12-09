@@ -71,11 +71,11 @@ public class UtilityController {
         return mapper.toDto(utilityStorage);
     }
 
-    @GetMapping("get/ ")
+    @GetMapping("search")
     @Operation(description = "Получить поле")
     @ApiResponse(description = "Запись не найдена", responseCode = "404")
     public List<UtilityStorageDto> search(
-            @RequestBody @Valid SearchUtilityStorageDto dto,
+            @Valid SearchUtilityStorageDto dto,
             @PageableDefault(size = 10, page = 0, sort = "name", direction = DESC) Pageable pageable) {
 
         SearchUtilityStorageArgument argument = mapper.toSearch(dto);
