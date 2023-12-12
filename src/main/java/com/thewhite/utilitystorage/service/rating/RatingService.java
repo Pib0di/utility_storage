@@ -63,9 +63,7 @@ public class RatingService {
         UtilityStorage utilityStorage = utilityStorageRepository.findById(utilityStorageId)
                 .orElseThrow(() -> new BadInputDataForRating("Запись с узказанным UtilityStorageId не найдена"));
 
-        System.out.println(NumberPoints.valueOf(pageable.getSort().get().toString()));
         NumberPoints numberPoints = searchRatingArgument.getPoint();
-
         BooleanExpression expression = qRating.utilityStorage.eq(utilityStorage);
         expression = numberPoints != null ? expression.and(qRating.point.eq(numberPoints)) : expression;
 

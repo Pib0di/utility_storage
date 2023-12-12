@@ -15,6 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "`rating`")
 @Entity
 public class Rating {
 
@@ -25,7 +26,7 @@ public class Rating {
 
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.SMALLINT)
-     NumberPoints point;
+    NumberPoints point;
 
     @Column(nullable = false)
     String description;

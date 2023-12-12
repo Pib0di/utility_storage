@@ -1,30 +1,45 @@
 package com.thewhite.utilitystorage.api.utilitystorage;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.github.database.rider.core.api.configuration.DBUnit;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.junit5.api.DBRider;
+import com.jupiter.tools.spring.test.postgres.annotation.meta.EnablePostgresIntegrationTest;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.CreateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UpdateUtilityDto;
 import com.thewhite.utilitystorage.api.utilitystorage.dto.UtilityStorageDto;
+import com.thewhite.utilitystorage.api.utilitystorage.mapper.UtilityMapper;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import com.thewhite.utilitystorage.repository.UtilityStorageRepository;
+import com.thewhite.utilitystorage.util.ResourceUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
-@AutoConfigureWebClient
+@EnablePostgresIntegrationTest
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(SoftAssertionsExtension.class)
+@DBRider
+@DBUnit(
+        caseSensitiveTableNames = true,
+        cacheConnection = false,
+        leakHunter = true,
+        schema = "public"
+)
 public class UtilityControllerIT {
 
     @Autowired
@@ -32,25 +47,16 @@ public class UtilityControllerIT {
 
     @Autowired
     UtilityStorageRepository repository;
+    @Autowired
+    UtilityMapper mapper;
 
-    UUID id = UUID.fromString("36b63a92-8dec-4fc6-b4d1-bf4d3d698f0f");
-    final Map<UUID, UtilityStorage> utilityStorageMap = new HashMap<>();
+
+    UUID id = UUID.fromString("a9147542-4860-4c67-9d2a-f506c2b7c921");
     Set<String> setLink = new HashSet<>();
 
     @BeforeEach
     void setUp() {
         setLink.add("https://bloclibrary.dev/#/");
-
-        utilityStorageMap.put(
-                id, UtilityStorage.builder()
-                        .id(id)
-                        .name("bloc")
-                        .description("стейтменеджмент")
-                        .link(setLink)
-                        .build()
-        );
-
-        ReflectionTestUtils.setField(repository, "utilityStorageMap", utilityStorageMap);
     }
 
     @Test
@@ -63,7 +69,7 @@ public class UtilityControllerIT {
                 .build();
 
         //Act
-        UtilityStorageDto response = webTestClient.post()
+        UtilityStorageDto actual = webTestClient.post()
                 .uri("utility-storages/create")
                 .contentType(APPLICATION_JSON)
                 .bodyValue(dto)
@@ -75,27 +81,15 @@ public class UtilityControllerIT {
                 .getResponseBody();
 
         //Assert
-        UtilityStorageDto expected = UtilityStorageDto.builder()
-                .id(response.getId())
-                .name("bloc")
-                .description("стейтменеджмент")
-                .link(setLink)
-                .build();
+        UtilityStorage expected = repository.findById(actual.getId()).get();
 
-        assertions.assertThat(response)
-                .isEqualTo(expected);
-
-        assertions.assertThat(repository.findById(response.getId()))
-                .isEqualTo(UtilityStorage.builder()
-                        .id(response.getId())
-                        .link(response.getLink())
-                        .name(response.getName())
-                        .description(response.getDescription())
-                        .build()
-                );
+        assertions.assertThat(expected.getId()).isEqualTo(actual.getId());
+        assertions.assertThat(expected.getName()).isEqualTo(actual.getName());
+        assertions.assertThat(expected.getDescription()).isEqualTo(actual.getDescription());
     }
 
     @Test
+    @DataSet("dataTest/api/utilityStorage/utilityStorage_update.json")
     void update(SoftAssertions assertions) {
         //Arrange
         UpdateUtilityDto dto = UpdateUtilityDto.builder()
@@ -111,6 +105,7 @@ public class UtilityControllerIT {
                 .description("стейтменеджмент")
                 .link(setLink)
                 .build();
+
 
         //Act
         UtilityStorageDto response = webTestClient.put()
@@ -131,6 +126,7 @@ public class UtilityControllerIT {
     }
 
     @Test
+    @DataSet("dataTest/api/utilityStorage/utilityStorage_update.json")
     void deleteUtility(SoftAssertions assertions) {
         //Act
         webTestClient
@@ -141,10 +137,11 @@ public class UtilityControllerIT {
                 .expectStatus()
                 .isOk();
 
-        assertions.assertThat(repository.findById(id)).isEqualTo(null);
+        assertions.assertThat(repository.findById(id).isEmpty()).isEqualTo(true);
     }
 
     @Test
+    @DataSet("dataTest/api/utilityStorage/utilityStorage_update.json")
     void getUtility(SoftAssertions assertions) {
         //Act
         UtilityStorageDto response = webTestClient.get()
@@ -157,10 +154,12 @@ public class UtilityControllerIT {
                 .getResponseBody();
 
         //Assert
+        setLink.clear();
+        setLink.add("link1");
         UtilityStorageDto expectedDto = UtilityStorageDto.builder()
                 .id(response.getId())
-                .name("bloc")
-                .description("стейтменеджмент")
+                .name("name1")
+                .description("Description1")
                 .link(setLink)
                 .build();
 
@@ -169,10 +168,14 @@ public class UtilityControllerIT {
     }
 
     @Test
+    @DataSet("dataTest/api/utilityStorage/utilityStorage_update.json")
     void search(SoftAssertions assertions) {
+        //Arrange
+        List<UtilityStorage> expected = ResourceUtils.parseJson("dataTest/api/utilityStorage/utilityStorage_search__expected.json", new TypeReference<>() {});
+
         // Act
         List<UtilityStorageDto> response = webTestClient.get()
-                .uri("utility-storages/search/bloc")
+                .uri("utility-storages/search")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -181,14 +184,6 @@ public class UtilityControllerIT {
                 .getResponseBody();
 
         //Assert
-        List<UtilityStorageDto> expectedDtoList = new ArrayList<>();
-        expectedDtoList.add(UtilityStorageDto.builder()
-                .id(id)
-                .name("bloc")
-                .description("стейтменеджмент")
-                .link(setLink)
-                .build());
-
-        assertions.assertThat(response).isEqualTo(expectedDtoList);
+        assertions.assertThat(response).containsExactlyInAnyOrderElementsOf(mapper.toDtoList(expected));
     }
 }

@@ -47,7 +47,6 @@ public class RatingController {
     @Operation(description = "Удалить оценку по id")
     @ApiResponse(description = "Оценка не найдена/удалена", responseCode = "404")
     public RatingDto delete(@RequestParam UUID id) {
-
         return mapper.toDto(service.delete(id));
     }
 
@@ -56,7 +55,6 @@ public class RatingController {
     public List<RatingDto> getList(@RequestParam UUID utilityStorageId,
                                    @Valid SearchRatingDto searchRatingDto,
                                    @PageableDefault(size = 10, page = 0, sort = "point", direction = DESC) Pageable pageable) {
-
         SearchRatingArgument searchRatingArgument = mapper.toCreateRatingArgument(searchRatingDto);
         List<Rating> ratingList = service.getList(utilityStorageId, searchRatingArgument, pageable);
 

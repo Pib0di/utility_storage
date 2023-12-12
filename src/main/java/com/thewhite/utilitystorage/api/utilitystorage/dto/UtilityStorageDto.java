@@ -1,5 +1,6 @@
 package com.thewhite.utilitystorage.api.utilitystorage.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Value;
@@ -23,5 +24,6 @@ public class UtilityStorageDto {
 
 
     @NotNull(message = "не указаны ссылки")
+    @JsonProperty("link")
     Set<String> link;
 }

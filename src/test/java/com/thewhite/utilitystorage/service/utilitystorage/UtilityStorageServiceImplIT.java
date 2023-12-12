@@ -6,6 +6,7 @@ import com.github.database.rider.spring.api.DBRider;
 import com.jupiter.tools.spring.test.postgres.annotation.meta.EnablePostgresIntegrationTest;
 import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
+import com.thewhite.utilitystorage.service.utilitystorage.argument.SearchUtilityStorageArgument;
 import com.thewhite.utilitystorage.util.ResourceUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
@@ -35,8 +36,11 @@ class UtilityStorageServiceImplIT {
 
         List<Rating> expected = ResourceUtils.parseJson("dataTest/service/utilityStorage/search_expected.json",  new TypeReference<>() {});
 
+        SearchUtilityStorageArgument searchUtilityStorageArgument = SearchUtilityStorageArgument.builder()
+                .name("name").description("des").build();
+
         // Act
-        List<UtilityStorage> actual = service.search(typeRequiredField, pageable);
+        List<UtilityStorage> actual = service.search(searchUtilityStorageArgument, pageable);
 
         // Assert
         softly.assertThat(actual)

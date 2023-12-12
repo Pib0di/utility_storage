@@ -1,6 +1,7 @@
 package com.thewhite.utilitystorage.api.rating.dto;
 
 import com.thewhite.utilitystorage.model.rating.NumberPoints;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Value;
@@ -16,7 +17,7 @@ public class RatingDto {
     UUID id;
 
     @NotNull(message = "не указан идентификатор харанилища")
-    UUID utilityStorageId;
+    UtilityStorage utilityStorage;
 
     @NotNull(message = "не указан рейтинг")
     NumberPoints point;
