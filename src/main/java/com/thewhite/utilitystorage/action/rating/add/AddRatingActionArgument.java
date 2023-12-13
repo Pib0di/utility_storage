@@ -1,8 +1,6 @@
-package com.thewhite.utilitystorage.api.rating.dto;
+package com.thewhite.utilitystorage.action.rating.add;
 
 import com.thewhite.utilitystorage.model.rating.NumberPoints;
-import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Value;
 
@@ -11,13 +9,10 @@ import java.util.UUID;
 
 @Value
 @Builder
-@Schema(description = "ДТО рейтинга со всеми существующими полями")
-public class RatingDto {
-    @NotNull(message = "не указан идентификатор рейтига")
-    UUID id;
+public class AddRatingActionArgument {
 
     @NotNull(message = "не указан идентификатор харанилища")
-    UtilityStorage utilityStorage;
+    UUID utilityStorageId;
 
     @NotNull(message = "не указан рейтинг")
     NumberPoints point;

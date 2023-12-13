@@ -14,14 +14,16 @@ public class AddRatingAction {
     private final RatingService ratingService;
     private final UtilityStorageService utilityStorageService;
 
-    public Rating add(CreateRatingArgument argument) {
+    public Rating add(AddRatingActionArgument argument) {
         if (utilityStorageService.get(argument.getUtilityStorageId()) == null) {
-            throw new BadInputDataForRating("Запись по заданному id не найдена");
+            throw new BadInputDataForRating("Запись (UtilityStorage) по заданному id не найдена");
         }
 
         return ratingService.add(AddRatingArgument.builder()
+                .description(argument.getDescription())
                 .point(argument.getPoint())
                 .utilityStorageId(argument.getUtilityStorageId())
-                .build());
+                .build()
+        );
     }
 }

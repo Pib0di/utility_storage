@@ -1,0 +1,23 @@
+alwaysCleanBefore: true
+alwaysCleanAfter: true
+caseInsensitiveStrategy: !!com.github.database.rider.core.api.configuration.Orthography 'LOWERCASE'
+properties:
+  schema: public
+  caseSensitiveTableNames: true
+
+cacheTableNames: true
+hibernate:
+  hbm2ddl:
+    auto=create-drop:
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?TC_INITSCRIPT=init_db.sql
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  liquibase:
+    change-log: classpath:db/changelog/changelog.xml
+    default-schema: test
+  jpa:
+    properties:
+      hibernate:
+        default_schema: test

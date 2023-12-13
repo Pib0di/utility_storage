@@ -1,8 +1,10 @@
 package com.thewhite.utilitystorage.service.utilitystorage.argument;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Value;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Value
 @Builder
@@ -14,5 +16,5 @@ public class CreateUtilityArgument {
     String description;
 
     @NotBlank(message = "не указана ссылка")
-    String link;
+    Set<String> link;
 }

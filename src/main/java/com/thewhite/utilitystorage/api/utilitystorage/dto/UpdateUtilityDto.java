@@ -1,9 +1,11 @@
 package com.thewhite.utilitystorage.api.utilitystorage.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Builder;
+import lombok.Value;
 
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.UUID;
 
 @Value
@@ -18,7 +20,7 @@ public class UpdateUtilityDto {
 
     @NotNull(message = "не указано описание")
     String description;
-    
+
     @NotNull(message = "не указаны ссылки")
-    String link;
+    Set<String> link;
 }

@@ -1,28 +1,37 @@
 package com.thewhite.utilitystorage.model.rating;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
+import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.type.SqlTypes;
 
+import javax.persistence.*;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "`rating`")
+@Entity
 public class Rating {
 
-    @NotNull(message = "не указан id оценки")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     UUID id;
 
-    @NotNull(message = "не указан id записи")
-    UUID utilityId;
-
-    @NotNull(message = "не указан комментарий")
+    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.SMALLINT)
     NumberPoints point;
 
-    @NotNull(message = "не указано описание")
+    @Column(nullable = false)
     String description;
+
+    @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    UtilityStorage utilityStorage;
 }

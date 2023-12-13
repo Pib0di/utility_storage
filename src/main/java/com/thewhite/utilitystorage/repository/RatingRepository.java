@@ -1,34 +1,22 @@
-
 package com.thewhite.utilitystorage.repository;
 
 import com.thewhite.utilitystorage.model.rating.Rating;
-import org.springframework.stereotype.Component;
+import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-@Component
-public class RatingRepository {
-    private final Map<UUID, Rating> ratingMap = new HashMap<>();
+@Repository
+public interface RatingRepository extends JpaRepository<Rating, UUID>, QuerydslPredicateExecutor<Rating>, PagingAndSortingRepository<Rating, UUID> {
 
-    public Rating add(Rating rating) {
+    @Modifying
+    @Query("delete from Rating rating where rating.utilityStorage = :utilityStorageId")
+    void deleteAllByUtilityId(@Param("utilityStorageId") UtilityStorage utilityStorageId);
 
-        if (ratingMap.put(rating.getId(), rating) == null) {
-            return rating;
-        }
-
-        return null;
-    }
-
-    public Rating delete(UUID id) {
-        return ratingMap.remove(id);
-    }
-
-    public List<Rating> getList(UUID utilityId) {
-        return ratingMap.values().stream()
-                .filter(arg -> arg.getUtilityId().equals(utilityId))
-                .toList();
-    }
 }

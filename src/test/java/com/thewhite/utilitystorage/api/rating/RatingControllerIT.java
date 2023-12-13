@@ -1,7 +1,12 @@
 package com.thewhite.utilitystorage.api.rating;
 
+import com.github.database.rider.core.api.configuration.DBUnit;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.junit5.api.DBRider;
+import com.jupiter.tools.spring.test.postgres.annotation.meta.EnablePostgresIntegrationTest;
 import com.thewhite.utilitystorage.api.rating.dto.AddRatingDto;
 import com.thewhite.utilitystorage.api.rating.dto.RatingDto;
+import com.thewhite.utilitystorage.api.rating.mapper.RatingMapper;
 import com.thewhite.utilitystorage.model.rating.NumberPoints;
 import com.thewhite.utilitystorage.model.rating.Rating;
 import com.thewhite.utilitystorage.model.utilityStorage.UtilityStorage;
@@ -13,66 +18,57 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
+@EnablePostgresIntegrationTest
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@AutoConfigureWebClient
 @ExtendWith(SoftAssertionsExtension.class)
+@DBRider
+@DBUnit(
+        caseSensitiveTableNames = true,
+        cacheConnection = false,
+        leakHunter = true
+//        schema = "public"as
+)
 class RatingControllerIT {
-
     @Autowired
-    WebTestClient webTestClient;
-
+    private WebTestClient webTestClient;
     @Autowired
     RatingRepository ratingRepository;
-
     @Autowired
     UtilityStorageRepository utilityStorageRepository;
+    @Autowired
+    RatingMapper mapper;
 
-    UUID id = UUID.fromString("36b63a92-8dec-4fc6-b4d1-bf4d3d698f0f");
-    UUID utilityId = UUID.fromString("73bd61ff-d38b-4132-89d5-676754e9baca");
-
-    final Map<UUID, Rating> ratingMap = new HashMap<>();
-    final Map<UUID, UtilityStorage> utilityStorageMap = new HashMap<>();
+    UUID id = UUID.fromString("724aebb0-251f-447b-a293-bee75c676ecc");
+    UUID utilityId = UUID.fromString("a9147542-4860-4c67-9d2a-f506c2b7c921");
+    UtilityStorage utilityStorage;
 
     @BeforeEach
     void setUp() {
-        ratingMap.put(
-                id, Rating.builder()
-                        .id(id)
-                        .utilityId(utilityId)
-                        .point(NumberPoints.ONE)
-                        .build()
-        );
-
-        ReflectionTestUtils.setField(ratingRepository, "ratingMap", ratingMap);
-
-        utilityStorageMap.put(
-                utilityId, UtilityStorage.builder()
-                        .id(utilityId)
-                        .name("bloc")
-                        .description("utilityStorage которому будет присваиваться рейтинг")
-                        .link("https://bloclibrary.dev/#/")
-                        .build()
-        );
-
-        ReflectionTestUtils.setField(utilityStorageRepository, "utilityStorageMap", utilityStorageMap);
+        utilityStorage = UtilityStorage.builder()
+                .description("Description1")
+                .id(utilityId)
+                .link(new HashSet<>(Arrays.asList("link1")))
+                .name("name1")
+                .build();
     }
 
     @Test
+    @DataSet("dataTest/api/rating/rating_add.json")
     void add(SoftAssertions assertions) {
         //Arrange
         AddRatingDto dto = AddRatingDto.builder()
+                .description("desc")
                 .utilityStorageId(utilityId)
                 .point(NumberPoints.THREE)
                 .build();
@@ -90,21 +86,22 @@ class RatingControllerIT {
                 .getResponseBody();
 
         //Assert
-        RatingDto expected = RatingDto.builder()
-                .id(response.getId())
-                .utilityId(utilityId)
-                .point(NumberPoints.THREE)
-                .build();
+        Optional<Rating> rating = ratingRepository.findById(response.getId());
+        RatingDto ratingDto = mapper.toDto(rating.get());
 
-        assertions.assertThat(response).isEqualTo(expected);
+        assertions.assertThat(response.getId()).isEqualTo(ratingDto.getId());
+        assertions.assertThat(response.getDescription()).isEqualTo(ratingDto.getDescription());
+        assertions.assertThat(response.getPoint()).isEqualTo(ratingDto.getPoint());
     }
 
+
     @Test
+    @DataSet("dataTest/api/rating/rating_delete.json")
     void delete() {
         //Act
         webTestClient
                 .delete()
-                .uri("ratings/delete/" + id)
+                .uri("ratings/delete/?id=" + id)
                 .exchange()
                 //Assert
                 .expectStatus()
